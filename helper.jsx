@@ -2771,7 +2771,11 @@ e.put("/static/js/dashboard/tpl/custom-chart-edit.html",(
                             <a class="cursor-pointer bdp-icon-wrap" title="{{chart.addField | translate}}">
                                 <i class="bdp-icon ico-plus1"></i>
                             </a>
-
+                            <ul class="field-type-select dropdown-wrap" ng-show="newFieldTypeSelect">
+                            <li class="dropdown-item" ng-click="createFieldFormula()" translate="chart.addFormulaField"></li>
+                            <li class="dropdown-item" ng-click="createFieldGroup()" translate="chart.addGroupField"></li>
+                            <li class="dropdown-item" ng-click="createFieldByML()" translate="ML_wd.btnRunModel" ng-if="permision.newTraining && !wsId"></li>
+                            </ul>
                             </div>
                             </div>
                             </div>
