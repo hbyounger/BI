@@ -8552,34 +8552,9 @@
       <file leaf-file-name="海致BDP-大数据时代的商业智能.htm" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/海致BDP-大数据时代的商业智能.htm">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-14987">
+            <state relative-caret-position="253">
               <caret line="1710" column="9" selection-start-line="1710" selection-start-column="9" selection-end-line="1710" selection-end-column="9" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="helper.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/helper.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="191">
-              <caret line="1908" column="16" selection-start-line="1908" selection-start-column="16" selection-end-line="1908" selection-end-column="16" />
-              <folding>
-                <marker date="1505903729000" expanded="false" signature="40:1130" ph="{&quot;map&quot;: &quot;nou5p4&quot;...}" />
-                <marker date="1505903729000" expanded="false" signature="1948:17913" ph="{...}" />
-                <marker date="1505903729000" expanded="false" signature="2605:7325" ph="{...}" />
-                <marker date="1505903729000" expanded="false" signature="2628:3308" ph="[...]" />
-                <marker date="1505903729000" expanded="true" signature="172596:172609" ph="..." />
-                <marker date="1505903729000" expanded="true" signature="173961:173978" ph="..." />
-                <marker date="1505903729000" expanded="true" signature="174254:174271" ph="..." />
-                <marker date="1505903729000" expanded="true" signature="337627:337674" ph="..." />
-                <marker date="1505903729000" expanded="false" signature="523660:527806" ph="{...}" />
-                <marker date="1505903729000" expanded="false" signature="527865:535383" ph="{...}" />
-                <marker date="1505903729000" expanded="false" signature="535413:535698" ph="{...}" />
-                <marker date="1505903729000" expanded="false" signature="535724:536964" ph="{...}" />
-                <marker date="1505903729000" expanded="false" signature="536994:537630" ph="{...}" />
-                <marker date="1505903729000" expanded="false" signature="537656:538723" ph="{...}" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -8587,8 +8562,61 @@
       <file leaf-file-name="workspace.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/workspace.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="194">
-              <caret line="707" column="55" selection-start-line="707" selection-start-column="55" selection-end-line="707" selection-end-column="55" />
+            <state relative-caret-position="164">
+              <caret line="703" column="44" selection-start-line="703" selection-start-column="44" selection-end-line="703" selection-end-column="44" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="helper.jsx" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/helper.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="171">
+              <caret line="2773" column="0" selection-start-line="2773" selection-start-column="0" selection-end-line="2773" selection-end-column="0" />
+              <folding>
+                <element signature="e#97404#149730#1" expanded="false" />
+                <element signature="e#149755#152971#1" expanded="false" />
+                <element signature="e#153065#155533#1" expanded="false" />
+                <element signature="e#155584#156625#1" expanded="false" />
+                <element signature="e#156727#158170#1" expanded="false" />
+                <element signature="e#159014#159727#1" expanded="false" />
+                <element signature="e#159948#161535#1" expanded="false" />
+                <element signature="e#161540#163769#1" expanded="false" />
+                <element signature="e#163774#164049#1" expanded="false" />
+                <element signature="e#164054#164342#1" expanded="false" />
+                <element signature="e#164347#164616#1" expanded="false" />
+                <element signature="e#164628#164952#1" expanded="false" />
+                <element signature="e#164958#165038#1" expanded="false" />
+                <element signature="e#165166#168131#1" expanded="false" />
+                <element signature="e#168192#172036#1" expanded="false" />
+                <element signature="e#172238#172464#0" expanded="false" />
+                <element signature="e#172635#173193#0" expanded="false" />
+                <element signature="e#179602#183299#0" expanded="false" />
+                <element signature="e#179695#180130#0" expanded="false" />
+                <element signature="e#180143#180584#0" expanded="false" />
+                <element signature="e#180597#181035#0" expanded="false" />
+                <element signature="e#181048#181483#0" expanded="false" />
+                <element signature="e#181496#181930#0" expanded="false" />
+                <element signature="e#181943#182379#0" expanded="false" />
+                <element signature="e#182392#182832#0" expanded="false" />
+                <element signature="e#182845#183285#0" expanded="false" />
+                <element signature="e#183478#198141#1" expanded="false" />
+                <element signature="e#198919#201279#1" expanded="false" />
+                <element signature="e#201292#205959#1" expanded="false" />
+                <element signature="e#205972#206052#1" expanded="false" />
+                <element signature="e#206120#209686#1" expanded="false" />
+                <element signature="e#209691#213081#1" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="327">
+              <caret line="78" column="0" selection-start-line="78" selection-start-column="0" selection-end-line="78" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -8672,6 +8700,8 @@
         <option value="$PROJECT_DIR$/src/chartEdit.js" />
         <option value="$PROJECT_DIR$/海致BDP-大数据时代的商业智能_files/app_36c0c7f.js" />
         <option value="$PROJECT_DIR$/helper.js" />
+        <option value="$PROJECT_DIR$/helper.jsx" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -8793,12 +8823,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1504776378447</updated>
-      <workItem from="1504776383059" duration="53619000" />
+      <workItem from="1504776383059" duration="66868000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="53619000" />
+    <option name="totallyTimeSpent" value="66868000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="10" y="23" width="1229" height="730" extended-state="0" />
@@ -8835,7 +8865,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="11" />
+      <option name="time" value="12" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -8880,26 +8910,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/海致BDP-大数据时代的商业智能.htm">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-14987">
-          <caret line="1710" column="9" selection-start-line="1710" selection-start-column="9" selection-end-line="1710" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/海致BDP-大数据时代的商业智能_files/directives_0bbd24f.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="206">
           <caret line="19657" column="28" selection-start-line="19657" selection-start-column="28" selection-end-line="19657" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/workspace.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="194">
-          <caret line="707" column="55" selection-start-line="707" selection-start-column="55" selection-end-line="707" selection-end-column="55" />
           <folding />
         </state>
       </provider>
@@ -17461,26 +17475,76 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/海致BDP-大数据时代的商业智能.htm">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="1710" column="9" selection-start-line="1710" selection-start-column="9" selection-end-line="1710" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/helper.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="191">
-          <caret line="1908" column="16" selection-start-line="1908" selection-start-column="16" selection-end-line="1908" selection-end-column="16" />
+        <state relative-caret-position="148750">
+          <caret line="11283" column="0" selection-start-line="11283" selection-start-column="0" selection-end-line="11283" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/workspace.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="164">
+          <caret line="703" column="44" selection-start-line="703" selection-start-column="44" selection-end-line="703" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/helper.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="2773" column="0" selection-start-line="2773" selection-start-column="0" selection-end-line="2773" selection-end-column="0" />
           <folding>
-            <marker date="1505903729000" expanded="false" signature="40:1130" ph="{&quot;map&quot;: &quot;nou5p4&quot;...}" />
-            <marker date="1505903729000" expanded="false" signature="1948:17913" ph="{...}" />
-            <marker date="1505903729000" expanded="false" signature="2605:7325" ph="{...}" />
-            <marker date="1505903729000" expanded="false" signature="2628:3308" ph="[...]" />
-            <marker date="1505903729000" expanded="true" signature="172596:172609" ph="..." />
-            <marker date="1505903729000" expanded="true" signature="173961:173978" ph="..." />
-            <marker date="1505903729000" expanded="true" signature="174254:174271" ph="..." />
-            <marker date="1505903729000" expanded="true" signature="337627:337674" ph="..." />
-            <marker date="1505903729000" expanded="false" signature="523660:527806" ph="{...}" />
-            <marker date="1505903729000" expanded="false" signature="527865:535383" ph="{...}" />
-            <marker date="1505903729000" expanded="false" signature="535413:535698" ph="{...}" />
-            <marker date="1505903729000" expanded="false" signature="535724:536964" ph="{...}" />
-            <marker date="1505903729000" expanded="false" signature="536994:537630" ph="{...}" />
-            <marker date="1505903729000" expanded="false" signature="537656:538723" ph="{...}" />
+            <element signature="e#97404#149730#1" expanded="false" />
+            <element signature="e#149755#152971#1" expanded="false" />
+            <element signature="e#153065#155533#1" expanded="false" />
+            <element signature="e#155584#156625#1" expanded="false" />
+            <element signature="e#156727#158170#1" expanded="false" />
+            <element signature="e#159014#159727#1" expanded="false" />
+            <element signature="e#159948#161535#1" expanded="false" />
+            <element signature="e#161540#163769#1" expanded="false" />
+            <element signature="e#163774#164049#1" expanded="false" />
+            <element signature="e#164054#164342#1" expanded="false" />
+            <element signature="e#164347#164616#1" expanded="false" />
+            <element signature="e#164628#164952#1" expanded="false" />
+            <element signature="e#164958#165038#1" expanded="false" />
+            <element signature="e#165166#168131#1" expanded="false" />
+            <element signature="e#168192#172036#1" expanded="false" />
+            <element signature="e#172238#172464#0" expanded="false" />
+            <element signature="e#172635#173193#0" expanded="false" />
+            <element signature="e#179602#183299#0" expanded="false" />
+            <element signature="e#179695#180130#0" expanded="false" />
+            <element signature="e#180143#180584#0" expanded="false" />
+            <element signature="e#180597#181035#0" expanded="false" />
+            <element signature="e#181048#181483#0" expanded="false" />
+            <element signature="e#181496#181930#0" expanded="false" />
+            <element signature="e#181943#182379#0" expanded="false" />
+            <element signature="e#182392#182832#0" expanded="false" />
+            <element signature="e#182845#183285#0" expanded="false" />
+            <element signature="e#183478#198141#1" expanded="false" />
+            <element signature="e#198919#201279#1" expanded="false" />
+            <element signature="e#201292#205959#1" expanded="false" />
+            <element signature="e#205972#206052#1" expanded="false" />
+            <element signature="e#206120#209686#1" expanded="false" />
+            <element signature="e#209691#213081#1" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="327">
+          <caret line="78" column="0" selection-start-line="78" selection-start-column="0" selection-end-line="78" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
