@@ -4,7 +4,7 @@
 import React,{Component} from "React"
 
 //"/static/js/dashboard/tpl/custom-chart-edit.html"
-class customChartEdit extends Component{
+class CustomChartEdit extends Component{
 
     constructor(){
         super();
