@@ -1501,11 +1501,11 @@ function formulaFunc() {
 
 
 //"$rootScope", "errHint", "$translate"
-function verifyTbName(e, t, a) {
+function verifyTbName($rootScope, errHint, $translate) {
     var i = "",
         n = ["join.worksheetname", "tbNameInvalid"];
     return function () {
-        a(n).then(function (e) {
+        $translate(n).then(function (e) {
             i = e["join.worksheetname"] + e.tbNameInvalid
         })
     }(),
@@ -1515,7 +1515,7 @@ function verifyTbName(e, t, a) {
 }
 
 //$rootScope
-function dateTimeByHalfHour(e) {
+function dateTimeByHalfHour($rootScope) {
     return [{
         value: "00:00:00",
         label: "00:00"
@@ -1591,10 +1591,13 @@ function dateTimeByHalfHour(e) {
     }]
 }
 
+//数据存储空间提示
 //"ngDialog", "$rootScope"
-function capacityHint(e, t) {
+function capacityHint(ngDialog, $rootScope) {
     return function () {
-        e.closeAll(), t.maxSize = t.personalInfo.capacity_info.capacity, e.open({
+        ngDialog.closeAll();
+        $rootScope.maxSize = $rootScope.personalInfo.capacity_info.capacity;
+        ngDialog.open({
             template: "/static/partials/dialogTemplates/capacityHint.html",
             className: "ngdialog-theme-default ngDialog-width-330",
             scope: t
@@ -1602,45 +1605,52 @@ function capacityHint(e, t) {
     }
 }
 
+//出错提示
 //"$rootScope", "$timeout", "$location", "$translate"
-function errHint(e, t, a, i) {
+function errHint($rootScope, t, a, $translate) {
     var n = 0,
         r = null,
         o = !1;
-    return function (a, s) {
+    return function (code, s) {
         var l, d = "/login.html",
-            c = e.language;
-        s = s || {}, window.isThirdIframe || (window.isThirdIframe = e.isThirdIframe = !1);
+            c = $rootScope.language;
+        s = s || {},
+        window.isThirdIframe || (window.isThirdIframe = $rootScope.isThirdIframe = !1);
         var p = !1;
-        if ("number" != typeof a && isNaN(Number(a))) l = a;
+        if ("number" != typeof a && isNaN(Number(code)))
+            l = code;
         else {
-            switch (1 * a) {
+            switch (1 * code) {
                 case 1:
-                    $.cookie("token", ""), $.cookie("token_invalid", 1, {
+                    $.cookie("token", "");
+                    $.cookie("token_invalid", 1, {
                         path: "/"
-                    }), o || (o = !0, d = bdp.bdpLogin.checkPartnerLogin(), location.href = d);
+                    });
+                    o || (o = !0, d = bdp.bdpLogin.checkPartnerLogin(), location.href = d);
                     break;
                 case 2:
-                    l = i.instant("error.API");
+                    l = $translate.instant("error.API");
                     break;
                 case 3:
-                    return 0 == n && (l = i.instant("error.noExistOrAccess"), alert(l), n += 1), void(window.location.href = "/");
+                    return 0 == n && (l = $translate.instant("error.noExistOrAccess"), alert(l), n += 1);
+                    void(window.location.href = "/");
                 case 4:
-                    l = i.instant("error.unManager");
+                    l = $translate.instant("error.unManager");
                     break;
                 case 10:
-                    l = i.instant("error.serverFail");
+                    l = $translate.instant("error.serverFail");
                     break;
                 case 11:
-                    l = i.instant("error.paramError");
+                    l = $translate.instant("error.paramError");
                     break;
                 case 12:
-                    l = i.instant("error.internetOutRange"), setTimeout(function () {
+                    l = $translate.instant("error.internetOutRange");
+                    setTimeout(function () {
                         d = bdp.bdpLogin.checkPartnerLogin(), location.href = d
                     }, 1e3);
                     break;
                 case 13:
-                    0 == n && (l = i.instant("error.haveLogin"), alert(l), n += 1), $.cookie("token", ""), $.cookie("token_invalid", 1, {
+                    0 == n && (l = $translate.instant("error.haveLogin"), alert(l), n += 1), $.cookie("token", ""), $.cookie("token_invalid", 1, {
                         path: "/"
                     }), d = bdp.bdpLogin.checkPartnerLogin(), location.href = d;
                     break;
@@ -1648,13 +1658,13 @@ function errHint(e, t, a, i) {
                     0 == n && (alert(s.warn_msg), n += 1), d = bdp.bdpLogin.checkPartnerLogin(), location.href = d;
                     break;
                 case 15:
-                    0 == n && (l = i.instant("error.noPermission"), alert(l), n += 1), d = bdp.bdpLogin.checkPartnerLogin(), location.href = d;
+                    0 == n && (l = $translate.instant("error.noPermission"), alert(l), n += 1), d = bdp.bdpLogin.checkPartnerLogin(), location.href = d;
                     break;
                 case 18:
-                    l = i.instant("error.noBind"), l = "";
+                    l = $translate.instant("error.noBind"), l = "";
                     break;
                 case 19:
-                    l = i.instant("error.confirmed"), d = bdp.bdpLogin.checkPartnerLogin(), location.href = d, l = "";
+                    l = $translate.instant("error.confirmed"), d = bdp.bdpLogin.checkPartnerLogin(), location.href = d, l = "";
                     break;
                 case 20:
                     l = "", $.cookie("password_changed", 1, {
@@ -1662,240 +1672,243 @@ function errHint(e, t, a, i) {
                     }), d = bdp.bdpLogin.checkPartnerLogin(), window.location.href = d;
                     break;
                 case 21:
-                    l = i.instant("error.noChartOrnoAccess");
+                    l = $translate.instant("error.noChartOrnoAccess");
                     break;
                 case 22:
-                    l = i.instant("error.dashMetaTooLarge");
+                    l = $translate.instant("error.dashMetaTooLarge");
                     break;
                 case 102:
-                    l = i.instant("error.datasourceNotExist");
+                    l = $translate.instant("error.datasourceNotExist");
                     break;
                 case 103:
-                    l = i.instant("error.noDelete");
+                    l = $translate.instant("error.noDelete");
                     break;
                 case 104:
-                    l = i.instant("ds.connectFail");
+                    l = $translate.instant("ds.connectFail");
                     break;
                 case 126:
-                    l = i.instant("error.apiTimesLimit");
+                    l = $translate.instant("error.apiTimesLimit");
                     break;
                 case 106:
-                    l = i.instant("error.saveSuccessAndSync");
+                    l = $translate.instant("error.saveSuccessAndSync");
                     break;
                 case 108:
-                    l = i.instant("error.fieldRepeat");
+                    l = $translate.instant("error.fieldRepeat");
                     break;
                 case 109:
-                    l = i.instant("error.apiUsernameExist");
+                    l = $translate.instant("error.apiUsernameExist");
                     break;
                 case 110:
-                    l = i.instant("error.dsRepeat");
+                    l = $translate.instant("error.dsRepeat");
                     break;
                 case 111:
-                    l = i.instant("error.captchaSendError");
+                    l = $translate.instant("error.captchaSendError");
                     break;
                 case 112:
-                    l = i.instant("error.captchaError");
+                    l = $translate.instant("error.captchaError");
                     break;
                 case 113:
-                    l = i.instant("error.captchaOutOfLimit");
+                    l = $translate.instant("error.captchaOutOfLimit");
                     break;
                 case 114:
-                    l = i.instant("error.kstRepeat");
+                    l = $translate.instant("error.kstRepeat");
                     break;
                 case 115:
-                    l = i.instant("error.kstError");
+                    l = $translate.instant("error.kstError");
                     break;
                 case 116:
-                    l = i.instant("error.jinyiweiConnFail");
+                    l = $translate.instant("error.jinyiweiConnFail");
                     break;
                 case 117:
-                    l = i.instant("error.loginInfoErrorOrUserLock");
+                    l = $translate.instant("error.loginInfoErrorOrUserLock");
                     break;
                 case 118:
-                    l = i.instant("error.dsConfigError");
+                    l = $translate.instant("error.dsConfigError");
                     break;
                 case 119:
-                    l = i.instant("error.loginFrequently");
+                    l = $translate.instant("error.loginFrequently");
                     break;
                 case 120:
-                    l = i.instant("error.phoneVerifyFail");
+                    l = $translate.instant("error.phoneVerifyFail");
                     break;
                 case 121:
-                    l = i.instant("error.serviceException");
+                    l = $translate.instant("error.serviceException");
                     break;
                 case 122:
-                    l = i.instant("error.accountFail");
+                    l = $translate.instant("error.accountFail");
                     break;
                 case 124:
-                    l = i.instant("error.passworkWrong");
+                    l = $translate.instant("error.passworkWrong");
                     break;
                 case 125:
-                    l = i.instant("error.usernameWrong");
+                    l = $translate.instant("error.usernameWrong");
                     break;
                 case 128:
-                    l = i.instant("ds.baiduTaskExist");
+                    l = $translate.instant("ds.baiduTaskExist");
                     break;
                 case 129:
-                    l = i.instant("error.tokenWrong");
+                    l = $translate.instant("error.tokenWrong");
                     break;
                 case 201:
-                    l = i.instant("wb.isUpdatingThen");
+                    l = $translate.instant("wb.isUpdatingThen");
                     break;
                 case 1001:
-                    l = i.instant("error.userForbidden");
+                    l = $translate.instant("error.userForbidden");
                     break;
                 case 1002:
-                    l = i.instant("error.password");
+                    l = $translate.instant("error.password");
                     break;
                 case 1004:
-                    l = i.instant("error.noAuthorizationInfo");
+                    l = $translate.instant("error.noAuthorizationInfo");
                     break;
                 case 1009:
-                    l = i.instant("error.noUser");
+                    l = $translate.instant("error.noUser");
                     break;
                 case 1012:
-                    l = i.instant("error.limitNumber");
+                    l = $translate.instant("error.limitNumber");
                     break;
                 case 1014:
-                    l = "", $.cookie("password_reset", 1, {
+                    l = "";
+                    $.cookie("password_reset", 1, {
                         path: "/"
-                    }), d = bdp.bdpLogin.checkPartnerLogin(), window.location.href = d;
+                    });
+                    d = bdp.bdpLogin.checkPartnerLogin();
+                    window.location.href = d;
                     break;
                 case 1015:
-                    l = i.instant("error.accountActived");
+                    l = $translate.instant("error.accountActived");
                     break;
                 case 1016:
-                    l = i.instant("error.accoutLimit");
+                    l = $translate.instant("error.accoutLimit");
                     break;
                 case 1018:
-                    l = i.instant("error.codeError");
+                    l = $translate.instant("error.codeError");
                     break;
                 case 1023:
-                    l = i.instant("error.mobileExisted");
+                    l = $translate.instant("error.mobileExisted");
                     break;
                 case 3003:
-                    l = i.instant("error.noId");
+                    l = $translate.instant("error.noId");
                     break;
                 case 3005:
-                    l = i.instant("error.needCtId");
+                    l = $translate.instant("error.needCtId");
                     break;
                 case 3008:
-                    l = i.instant("error.needId");
+                    l = $translate.instant("error.needId");
                     break;
                 case 3009:
-                    l = i.instant("error.missId");
+                    l = $translate.instant("error.missId");
                     break;
                 case 3011:
-                    l = i.instant("error.fidId");
+                    l = $translate.instant("error.fidId");
                     break;
                 case 3204:
-                    l = i.instant("error.dashboardOccupied");
+                    l = $translate.instant("error.dashboardOccupied");
                     break;
                 case 3209:
-                    l = i.instant("sql.sqlScriptNotBeNull");
+                    l = $translate.instant("sql.sqlScriptNotBeNull");
                     break;
                 case 3210:
-                    l = i.instant("error.dashboardNotbelong");
+                    l = $translate.instant("error.dashboardNotbelong");
                     break;
                 case 3211:
-                    l = i.instant("error.noChart");
+                    l = $translate.instant("error.noChart");
                     break;
                 case 3212:
-                    l = i.instant("error.noFolder");
+                    l = $translate.instant("error.noFolder");
                     break;
                 case 3216:
-                    l = i.instant("error.infoErrorInTable");
+                    l = $translate.instant("error.infoErrorInTable");
                     break;
                 case 3219:
-                    l = i.instant("error.tplNotExist");
+                    l = $translate.instant("error.tplNotExist");
                     break;
                 case 3220:
-                    l = i.instant("error.noDashboard");
+                    l = $translate.instant("error.noDashboard");
                     break;
                 case 3221:
-                    l = i.instant("error.noBelong");
+                    l = $translate.instant("error.noBelong");
                     break;
                 case 3222:
-                    l = i.instant("error.chartsNumMismatch");
+                    l = $translate.instant("error.chartsNumMismatch");
                     break;
                 case 3223:
-                    l = i.instant("error.noSelect");
+                    l = $translate.instant("error.noSelect");
                     break;
                 case 3224:
-                    l = i.instant("error.noLinkage");
+                    l = $translate.instant("error.noLinkage");
                     break;
                 case 3231:
-                    l = i.instant("error.needConfigList");
+                    l = $translate.instant("error.needConfigList");
                     break;
                 case 3232:
-                    l = i.instant("error.infoErrorInTable");
+                    l = $translate.instant("error.infoErrorInTable");
                     break;
                 case 7001:
-                    l = i.instant("error.needFormula");
+                    l = $translate.instant("error.needFormula");
                     break;
                 case 7024:
-                    l = i.instant("error.stringAbove");
+                    l = $translate.instant("error.stringAbove");
                     break;
                 case 7200:
-                    l = i.instant("error.errorFormula");
+                    l = $translate.instant("error.errorFormula");
                     break;
                 case 7300:
-                    l = i.instant("error.unknow");
+                    l = $translate.instant("error.unknow");
                     break;
                 case 7400:
-                    l = i.instant("error.fieldNull");
+                    l = $translate.instant("error.fieldNull");
                     break;
                 case 7500:
-                    l = i.instant("error.fieldRepeat");
+                    l = $translate.instant("error.fieldRepeat");
                     break;
                 case 7590:
-                    l = i.instant("error.fieldUsing");
+                    l = $translate.instant("error.fieldUsing");
                     break;
                 case 7601:
-                    l = i.instant("error.dataNameRepeat");
+                    l = $translate.instant("error.dataNameRepeat");
                     break;
                 case 7700:
-                    l = i.instant("error.errorFormula");
+                    l = $translate.instant("error.errorFormula");
                     break;
                 case 8003:
-                    l = i.instant("error.accoutRepeat");
+                    l = $translate.instant("error.accoutRepeat");
                     break;
                 case 9003:
-                    l = i.instant("error.info");
+                    l = $translate.instant("error.info");
                     break;
                 case 10004:
-                    l = i.instant("error.datasourceSyncing");
+                    l = $translate.instant("error.datasourceSyncing");
                     break;
                 case 10005:
-                    l = i.instant("error.dsAmountOutOfLimit");
+                    l = $translate.instant("error.dsAmountOutOfLimit");
                     break;
                 case 10006:
                     l = s.warn_msg;
                     break;
                 case 10007:
-                    l = i.instant("error.noDelete");
+                    l = $translate.instant("error.noDelete");
                     break;
                 case 10100:
-                    l = i.instant("error.noDianJingAccess");
+                    l = $translate.instant("error.noDianJingAccess");
                     break;
                 case 10115:
-                    l = i.instant("error.startDateError");
+                    l = $translate.instant("error.startDateError");
                     break;
                 case 10116:
-                    l = i.instant("error.endDateError");
+                    l = $translate.instant("error.endDateError");
                     break;
                 case 10117:
-                    l = i.instant("ds.baiduTaskDomainExit");
+                    l = $translate.instant("ds.baiduTaskDomainExit");
                     break;
                 case 10118:
-                    l = i.instant("ds.baiduTaskDomainNotExit");
+                    l = $translate.instant("ds.baiduTaskDomainNotExit");
                     break;
                 case 10119:
-                    l = i.instant("ds.baiduTaskCompanyError");
+                    l = $translate.instant("ds.baiduTaskCompanyError");
                     break;
                 case 10120:
-                    l = i.instant("ds.baiduTaskDomainError");
+                    l = $translate.instant("ds.baiduTaskDomainError");
                     break;
                 case 10121:
                 case 10122:
@@ -1903,23 +1916,23 @@ function errHint(e, t, a, i) {
                     l = s.warn_msg;
                     break;
                 case 10124:
-                    l = i.instant("ds.baiduTaskWeekError");
+                    l = $translate.instant("ds.baiduTaskWeekError");
                     break;
                 case 10625:
                 case 10626:
-                    l = i.instant("error.changeFileEncode");
+                    l = $translate.instant("error.changeFileEncode");
                     break;
                 case 12002:
-                    l = i.instant("error.groupRepeat");
+                    l = $translate.instant("error.groupRepeat");
                     break;
                 case 12008:
-                    l = i.instant("error.contactManager");
+                    l = $translate.instant("error.contactManager");
                     break;
                 case 12010:
-                    l = i.instant("error.noActivateCode");
+                    l = $translate.instant("error.noActivateCode");
                     break;
                 case 12011:
-                    l = i.instant("error.errorActivateCode");
+                    l = $translate.instant("error.errorActivateCode");
                     break;
                 case 12111:
                     l = s.warn_msg, setTimeout(function () {
@@ -1929,155 +1942,155 @@ function errHint(e, t, a, i) {
                     }, 1e3);
                     break;
                 case 13001:
-                    l = i.instant("error.noSelectId");
+                    l = $translate.instant("error.noSelectId");
                     break;
                 case 13004:
-                    l = i.instant("error.selectRepeat");
+                    l = $translate.instant("error.selectRepeat");
                     break;
                 case 16004:
-                    l = i.instant("error.noPermissionToPreview");
+                    l = $translate.instant("error.noPermissionToPreview");
                     break;
                 case 16005:
-                    l = i.instant("error.replacingExcelFailed");
+                    l = $translate.instant("error.replacingExcelFailed");
                     break;
                 case 16006:
-                    l = i.instant("error.exceptionInExcel");
+                    l = $translate.instant("error.exceptionInExcel");
                     break;
                 case 16007:
-                    l = i.instant("error.excelNotExist");
+                    l = $translate.instant("error.excelNotExist");
                     break;
                 case 16008:
-                    l = i.instant("error.excelIsUpdating");
+                    l = $translate.instant("error.excelIsUpdating");
                     break;
                 case 16009:
-                    l = i.instant("error.deletingExcelFailed");
+                    l = $translate.instant("error.deletingExcelFailed");
                     break;
                 case 16010:
-                    l = i.instant("error.excelCanNotBeEmpty");
+                    l = $translate.instant("error.excelCanNotBeEmpty");
                     break;
                 case 16011:
-                    l = i.instant("error.appendingExcelFailed");
+                    l = $translate.instant("error.appendingExcelFailed");
                     break;
                 case 16012:
-                    l = i.instant("error.fieldsInExcelMismatch");
+                    l = $translate.instant("error.fieldsInExcelMismatch");
                     break;
                 case 16013:
-                    l = i.instant("error.sameFieldsWhileAppending");
+                    l = $translate.instant("error.sameFieldsWhileAppending");
                     break;
                 case 16014:
-                    l = i.instant("error.fieldsNotInTable");
+                    l = $translate.instant("error.fieldsNotInTable");
                     break;
                 case 16015:
-                    l = i.instant("error.sheetNotExist");
+                    l = $translate.instant("error.sheetNotExist");
                     break;
                 case 16016:
-                    l = i.instant("error.sheetCanNotBeIgnored");
+                    l = $translate.instant("error.sheetCanNotBeIgnored");
                     break;
                 case 16017:
-                    l = i.instant("error.uploadingExcelFailed");
+                    l = $translate.instant("error.uploadingExcelFailed");
                     break;
                 case 16018:
                 case 16019:
-                    l = i.instant("error.fieldsInExcelMismatch");
+                    l = $translate.instant("error.fieldsInExcelMismatch");
                     break;
                 case 16025:
-                    l = i.instant("error.csvEncodeNotSupport");
+                    l = $translate.instant("error.csvEncodeNotSupport");
                     break;
                 case 16026:
-                    l = i.instant("error.changeFileEncode");
+                    l = $translate.instant("error.changeFileEncode");
                     break;
                 case 19001:
-                    l = i.instant("error.selectRely");
+                    l = $translate.instant("error.selectRely");
                     break;
                 case 19002:
-                    l = i.instant("wb.noWorksheets");
+                    l = $translate.instant("wb.noWorksheets");
                     break;
                 case 19005:
                     l = "聚类字段名称不能为空";
                     break;
                 case 21007:
-                    l = i.instant("error.dbCannotBeDeleted");
+                    l = $translate.instant("error.dbCannotBeDeleted");
                     break;
                 case 22001:
-                    l = i.instant("error.aggregationsRepeat");
+                    l = $translate.instant("error.aggregationsRepeat");
                     break;
                 case 22002:
-                    l = i.instant("error.aggregationsNull");
+                    l = $translate.instant("error.aggregationsNull");
                     break;
                 case 23023:
-                    l = i.instant("error.accoutExisted");
+                    l = $translate.instant("error.accoutExisted");
                     break;
                 case 23002:
-                    l = i.instant("error.captchaError");
+                    l = $translate.instant("error.captchaError");
                     break;
                 case 23003:
-                    l = i.instant("error.personalAccountNotExist");
+                    l = $translate.instant("error.personalAccountNotExist");
                     break;
                 case 23008:
-                    l = i.instant("error.nicknameExisted");
+                    l = $translate.instant("error.nicknameExisted");
                     break;
                 case 23009:
-                    l = i.instant("error.emailError");
+                    l = $translate.instant("error.emailError");
                     break;
                 case 23010:
-                    l = i.instant("error.captchaCounts");
+                    l = $translate.instant("error.captchaCounts");
                     break;
                 case 23013:
-                    l = i.instant("error.formatError");
+                    l = $translate.instant("error.formatError");
                     break;
                 case 23014:
-                    l = i.instant("error.oneHourLater");
+                    l = $translate.instant("error.oneHourLater");
                     break;
                 case 23016:
-                    l = i.instant("error.twentyFourHourLater");
+                    l = $translate.instant("error.twentyFourHourLater");
                     break;
                 case 23019:
-                    l = i.instant("error.emailExisted");
+                    l = $translate.instant("error.emailExisted");
                     break;
                 case 23020:
-                    l = i.instant("error.phoneExisted");
+                    l = $translate.instant("error.phoneExisted");
                     break;
                 case 23023:
-                    l = i.instant("error.personalUserExisted");
+                    l = $translate.instant("error.personalUserExisted");
                     break;
                 case 23030:
-                    l = i.instant("error.sensitiveWord");
+                    l = $translate.instant("error.sensitiveWord");
                     break;
                 case 24006:
-                    l = i.instant("error.accoutAccessLimit");
+                    l = $translate.instant("error.accoutAccessLimit");
                     break;
                 case 24007:
-                    l = i.instant("error.chartUnremove");
+                    l = $translate.instant("error.chartUnremove");
                     break;
                 case 24008:
-                    l = i.instant("error.userLimit");
+                    l = $translate.instant("error.userLimit");
                     break;
                 case 24009:
-                    l = i.instant("error.haveDeleted");
+                    l = $translate.instant("error.haveDeleted");
                     break;
                 case 24010:
-                    l = i.instant("error.haveRule");
+                    l = $translate.instant("error.haveRule");
                     break;
                 case 24011:
-                    l = i.instant("error.haveChart");
+                    l = $translate.instant("error.haveChart");
                     break;
                 case 24012:
-                    l = i.instant("error.removeAccess");
+                    l = $translate.instant("error.removeAccess");
                     break;
                 case 25001:
-                    l = i.instant("error.folderExisted");
+                    l = $translate.instant("error.folderExisted");
                     break;
                 case 25004:
-                    l = i.instant("wb.cannotMoveToSubFolder");
+                    l = $translate.instant("wb.cannotMoveToSubFolder");
                     break;
                 case 25005:
-                    l = i.instant("wb.cannotMoveTwoLevelsToSubFolder");
+                    l = $translate.instant("wb.cannotMoveTwoLevelsToSubFolder");
                     break;
                 case 26003:
-                    l = i.instant("error.nameExisted");
+                    l = $translate.instant("error.nameExisted");
                     break;
                 case 26007:
-                    l = i.instant("error.exceedTasks");
+                    l = $translate.instant("error.exceedTasks");
                     break;
                 case 26008:
                     l = "分享表暂不支持聚类模型";
@@ -2086,184 +2099,184 @@ function errHint(e, t, a, i) {
                     l = s.warn_msg;
                     break;
                 case 3e4:
-                    l = i.instant("error.tableDoesNotExist");
+                    l = $translate.instant("error.tableDoesNotExist");
                     break;
                 case 30001:
-                    l = i.instant("error.tableIsBeingUsed");
+                    l = $translate.instant("error.tableIsBeingUsed");
                     break;
                 case 30003:
                     l = s.warn_msg;
                     break;
                 case 30004:
-                    l = i.instant("error.tableMustBeBasetable");
+                    l = $translate.instant("error.tableMustBeBasetable");
                     break;
                 case 30005:
-                    l = "[" + s.warn_msg + "] " + i.instant("wb.transform.realtimeTableCantJoin");
+                    l = "[" + s.warn_msg + "] " + $translate.instant("wb.transform.realtimeTableCantJoin");
                     break;
                 case 30007:
-                    l = i.instant("error.fieldsInExcelMismatch");
+                    l = $translate.instant("error.fieldsInExcelMismatch");
                     break;
                 case 30009:
-                    l = i.instant("error.sameTitleExistInExcel");
+                    l = $translate.instant("error.sameTitleExistInExcel");
                     break;
                 case 31e3:
-                    l = i.instant("error.existRely");
+                    l = $translate.instant("error.existRely");
                     break;
                 case 31005:
                 case 31006:
                     l = s.warn_msg;
                     break;
                 case 31007:
-                    l = i.instant("error.viewGeneratorRuleNotExist");
+                    l = $translate.instant("error.viewGeneratorRuleNotExist");
                     break;
                 case 31008:
-                    l = i.instant("error.canNotModifyThisViewType");
+                    l = $translate.instant("error.canNotModifyThisViewType");
                     break;
                 case 31009:
-                    l = i.instant("error.viewGeneratorTypeNotExist");
+                    l = $translate.instant("error.viewGeneratorTypeNotExist");
                     break;
                 case 32001:
-                    l = i.instant("error.openDsTokenError");
+                    l = $translate.instant("error.openDsTokenError");
                     break;
                 case 32002:
-                    l = i.instant("error.ipNotInWhiteList");
+                    l = $translate.instant("error.ipNotInWhiteList");
                     break;
                 case 40001:
-                    l = i.instant("error.noPermissionToDelete");
+                    l = $translate.instant("error.noPermissionToDelete");
                     break;
                 case 40002:
                     var u = "";
-                    l = i.instant("error.fieldRepeat") + u;
+                    l = $translate.instant("error.fieldRepeat") + u;
                     break;
                 case 40005:
                     l = s.warn_msg;
                     break;
                 case 40007:
-                    l = i.instant("error.dataTooLong");
+                    l = $translate.instant("error.dataTooLong");
                     break;
                 case 40008:
-                    l = i.instant("error.changeToAggregatorFunc");
+                    l = $translate.instant("error.changeToAggregatorFunc");
                     break;
                 case 40009:
-                    l = i.instant("error.titleHasInvalidCharacter");
+                    l = $translate.instant("error.titleHasInvalidCharacter");
                     break;
                 case 40010:
-                    l = i.instant("error.contentHasInvalidCharacter");
+                    l = $translate.instant("error.contentHasInvalidCharacter");
                     break;
                 case 40011:
-                    l = i.instant("error.functionNeedBrackets");
+                    l = $translate.instant("error.functionNeedBrackets");
                     break;
                 case 40012:
-                    l = i.instant("error.mapCanNotBeEmpty");
+                    l = $translate.instant("error.mapCanNotBeEmpty");
                     break;
                 case 41001:
-                    l = i.instant("error.LdapTokenIsError");
+                    l = $translate.instant("error.LdapTokenIsError");
                     break;
                 case 41002:
-                    l = i.instant("error.LdapTokenIsDestroyed");
+                    l = $translate.instant("error.LdapTokenIsDestroyed");
                     break;
                 case 41003:
-                    l = i.instant("error.LdapUserNotExist");
+                    l = $translate.instant("error.LdapUserNotExist");
                     break;
                 case 70001:
-                    l = i.instant("ds.auxiliaryFieldHasExist");
+                    l = $translate.instant("ds.auxiliaryFieldHasExist");
                     break;
                 case 70002:
-                    l = i.instant("error.fieldNameUsing");
+                    l = $translate.instant("error.fieldNameUsing");
                     break;
                 case 81001:
                     var u = "";
-                    s.warn_msg && (u = "：" + s.warn_msg), l = i.instant("error.illegalFilter") + u;
+                    s.warn_msg && (u = "：" + s.warn_msg), l = $translate.instant("error.illegalFilter") + u;
                     break;
                 case 81002:
                     var u = "";
-                    s.warn_msg && (u = "：" + s.warn_msg), l = i.instant("error.illegalSortField") + u;
+                    s.warn_msg && (u = "：" + s.warn_msg), l = $translate.instant("error.illegalSortField") + u;
                     break;
                 case 9e4:
-                    l = i.instant("error.partitionExceed");
+                    l = $translate.instant("error.partitionExceed");
                     break;
                 case 90001:
-                    l = i.instant("error.partitionNotEnough");
+                    l = $translate.instant("error.partitionNotEnough");
                     break;
                 case 90002:
-                    l = i.instant("error.intermediateTableNoPartition");
+                    l = $translate.instant("error.intermediateTableNoPartition");
                     break;
                 case 90003:
-                    l = i.instant("error.unionTableNoPartition");
+                    l = $translate.instant("error.unionTableNoPartition");
                     break;
                 case 90006:
-                    l = i.instant("error.childTbBeingCreated");
+                    l = $translate.instant("error.childTbBeingCreated");
                     break;
                 case 90100:
                     s.result && s.result.map && (l = s.result.map(function (e) {
                         return e.name
-                    }).join()), l = i.instant("chartTemplate.tplUnusable") + "[" + l + "]";
+                    }).join()), l = $translate.instant("chartTemplate.tplUnusable") + "[" + l + "]";
                     break;
                 case 90007:
-                    l = i.instant("error.tableTypeNotSupportOpt");
+                    l = $translate.instant("error.tableTypeNotSupportOpt");
                     break;
                 case 90008:
-                    l = i.instant("error.updateModeNotChanged");
+                    l = $translate.instant("error.updateModeNotChanged");
                     break;
                 case 90009:
-                    l = i.instant("error.canNotChangeToRealTimeUpdateMode");
+                    l = $translate.instant("error.canNotChangeToRealTimeUpdateMode");
                     break;
                 case 90010:
-                    l = i.instant("error.canNotSetPartitionField");
+                    l = $translate.instant("error.canNotSetPartitionField");
                     break;
                 case 90011:
-                    l = i.instant("error.canNotMergeThisTable");
+                    l = $translate.instant("error.canNotMergeThisTable");
                     break;
                 case 90012:
-                    l = i.instant("error.updatedSoFrequentlyPleaseWait");
+                    l = $translate.instant("error.updatedSoFrequentlyPleaseWait");
                     break;
                 case 100001:
-                    l = i.instant("error.failedGetOperatorInfo");
+                    l = $translate.instant("error.failedGetOperatorInfo");
                     break;
                 case 100002:
-                    l = i.instant("error.authorizationExpired");
+                    l = $translate.instant("error.authorizationExpired");
                     break;
                 case 100003:
-                    l = i.instant("error.authorizationRecordNotExist");
+                    l = $translate.instant("error.authorizationRecordNotExist");
                     break;
                 case 100004:
-                    l = i.instant("error.failedAddOperator");
+                    l = $translate.instant("error.failedAddOperator");
                     break;
                 case 100005:
-                    l = i.instant("error.failedCreateAuthorization");
+                    l = $translate.instant("error.failedCreateAuthorization");
                     break;
                 case 100006:
-                    l = i.instant("error.failedUpdateLdapToken");
+                    l = $translate.instant("error.failedUpdateLdapToken");
                     break;
                 case 100007:
-                    l = i.instant("error.failedCreateLdapToken");
+                    l = $translate.instant("error.failedCreateLdapToken");
                     break;
                 case 100008:
-                    l = i.instant("error.failedDeleteLdapToken");
+                    l = $translate.instant("error.failedDeleteLdapToken");
                     break;
                 case 110001:
-                    l = i.instant("error.mobileOSorVersionRequired");
+                    l = $translate.instant("error.mobileOSorVersionRequired");
                     break;
                 case 110002:
-                    l = i.instant("error.unknownMobileOS");
+                    l = $translate.instant("error.unknownMobileOS");
                     break;
                 case 110003:
-                    l = i.instant("error.mobileVersionFormatError");
+                    l = $translate.instant("error.mobileVersionFormatError");
                     break;
                 case 120001:
-                    l = i.instant("error.srcDashIdRequiredWhenMovingChart");
+                    l = $translate.instant("error.srcDashIdRequiredWhenMovingChart");
                     break;
                 case 120002:
-                    l = i.instant("error.targetDashIdRequiredWhenMovingChart");
+                    l = $translate.instant("error.targetDashIdRequiredWhenMovingChart");
                     break;
                 case 120003:
-                    l = i.instant("error.dashFolderIdRequiredWhenMovingChart");
+                    l = $translate.instant("error.dashFolderIdRequiredWhenMovingChart");
                     break;
                 case 120004:
-                    l = i.instant("error.forbiddenMovingChart");
+                    l = $translate.instant("error.forbiddenMovingChart");
                     break;
                 case 120005:
-                    l = i.instant("error.movedChartExist");
+                    l = $translate.instant("error.movedChartExist");
                     break;
                 default:
                     l = s && s.warn_msg ? s.warn_msg : "en" == c ? "Something Wrong~" : "出错啦", p = !0
@@ -2275,39 +2288,48 @@ function errHint(e, t, a, i) {
     }
 }
 
+
 //"$rootScope", "$http", "errHint"
-function tbList(e, t, a) {
+function tbList($rootScope, $http, errHint) {
     return function () {
-        t.get("/api/tb/list", {
+        $http.get("/api/tb/list", {
             params: {
                 access_token: $.cookie("token")
             }
         }).success(function (t) {
-            if (0 == t.status) t.result ? e.tbList = t.result.self : e.tbList = [];
+            if (0 == t.status) t.result ? $rootScope.tbList = t.result.self : $rootScope.tbList = [];
             else {
                 var i = parseInt(t.status);
-                a(i)
+                errHint(i)
             }
         })
     }
 }
 
 //"formulaKeyMap"
-function formatFieldPercentile(e) {
+function formatFieldPercentile(formulaKeyMap) {
     return function (e) {
-        if (!e) return e;
-        if ("PERCENT" != e.aggregator) return e.percent = "", e;
+        if (!e)
+            return e;
+        if ("PERCENT" != e.aggregator)
+            return e.percent = "", e;
         var t = new RegExp("^(\\d|[1-9]\\d|100)$");
-        if ("中位数" == e.aggregator_name || "Median" == e.aggregator_name) e.aggregator = "MED", e.percent = "0.5";
+        if ("中位数" == e.aggregator_name || "Median" == e.aggregator_name) {
+            e.aggregator = "MED";
+            e.percent = "0.5";
+        }
         else if (t.test(parseInt(e.aggregator_name))) {
             var a = parseInt(e.aggregator_name);
-            e.aggregator = "PERCENT_" + a, e.percent = String(a / 100)
+            e.aggregator = "PERCENT_" + a;
+            e.percent = String(a / 100)
         }
         return e
     }
 }
+
+//设置高级聚合运算器名称
 //"formulaKeyMap"
-function setAdvanceAggregatorName(e) {
+function setAdvanceAggregatorName(formulaKeyMap) {
     function t(e) {
         var t = bdpChart.language || "zh",
             a = "";
@@ -2460,33 +2482,36 @@ function setAdvanceAggregatorName(e) {
         var r = [];
         return r.push(a), r.push(i), r
     }
-    return function (i, n) {
+    return function (obj, n) {
         var r = bdpChart.language || "zh",
             o = "",
             s = "",
             l = "",
             d = [];
-        if (i.hasOwnProperty("aggregator")) {
-            if (o = e[i.aggregator], Number(i.aggregator_name) <= 100 && Number(i.aggregator_name) > 0)
-                if ("zh" == r) o = "百分位" + parseInt(i.aggregator_name);
+        if (obj.hasOwnProperty("aggregator")) {
+            if (o = formulaKeyMap[obj.aggregator], Number(obj.aggregator_name) <= 100 && Number(obj.aggregator_name) > 0){
+                if ("zh" == r)
+                    o = "百分位" + parseInt(obj.aggregator_name);
                 else {
                     var c = "";
-                    c = parseInt(i.aggregator_name) % 10 == 1 && 11 != parseInt(i.aggregator_name) ? "st percentile" : parseInt(i.aggregator_name) % 10 == 2 && 12 != parseInt(i.aggregator_name) ? "nd percentile" : parseInt(i.aggregator_name) % 10 == 3 && 13 != parseInt(i.aggregator_name) ? "rd percentile" : "th percentile", o = parseInt(i.aggregator_name) + c
+                    c = parseInt(obj.aggregator_name) % 10 == 1 && 11 != parseInt(obj.aggregator_name) ? "st percentile" : parseInt(obj.aggregator_name) % 10 == 2 && 12 != parseInt(obj.aggregator_name) ? "nd percentile" : parseInt(obj.aggregator_name) % 10 == 3 && 13 != parseInt(obj.aggregator_name) ? "rd percentile" : "th percentile", o = parseInt(obj.aggregator_name) + c
                 }
-            1 == i.is_build_aggregated && (o = "")
+            }
+            1 == obj.is_build_aggregated && (o = "")
         }
-        i.hasOwnProperty("advance_aggregator") && (d = a(i), s = d[1], "0" == d[0] && (o = ""));
+        obj.hasOwnProperty("advance_aggregator") && (d = a(i), s = d[1], "0" == d[0] && (o = ""));
         var p = t(i);
         return p && (s = p), n ? l = s : o ? (l += "(" + o, s && (l += " - " + s), l += ")") : s && (l += "(", l += s, l += ")"), l
     }
 }
+
 //"$rootScope", "commonService"
-function getFunctionList(e, t) {
+function getFunctionList(e, commonService) {
     var a = {
         base: [],
         all: []
     };
-    t.getFunctionList().then(function (t) {
+    commonService.getFunctionList().then(function (t) {
         if (0 == t.status) {
             var i = t.result.classification,
                 n = {};
@@ -3324,39 +3349,39 @@ function formulaService(e, t, a, i, n) {
 //"BC.services"
 
 //"$http", "errHint", "commonHttp"
-function commonService(e, t, a) {
-    var i, n, r, o = function (e) {
+function commonService(e, errHint, commonHttp) {
+    var global_config, project, dashboard, o = function (e) {
         if (e = e.data || e, "0" == e.status) return e.result;
         var a = null;
         return e.errstr && (a = {
             warn_msg: e.errstr
-        }), t(Number(e.status), a), null
+        }), errHint(Number(e.status), a), null
     };
-    i = {
+    global_config = {
         modify: function (e) {
-            return a.post("/api/global_config/modify", {
+            return commonHttp.post("/api/global_config/modify", {
                 data: e
             }).then(o)
         },
         themeModify: function (e) {
-            return a.post("/api/user/modify_theme", {
+            return commonHttp.post("/api/user/modify_theme", {
                 theme_id: e
             })
         }
     },
-        n = {
+        project = {
             create: function (e, t, i) {
-                return a.post("/api/project/create", {
+                return commonHttp.post("/api/project/create", {
                     name: e,
                     parent_id: t || "",
                     category: i
                 })
             },
             getTree: function (e) {
-                return a.get("/api/project/tree", e).then(o)
+                return commonHttp.get("/api/project/tree", e).then(o)
             },
             modify: function (e, t) {
-                return a.get("/api/project/modify", {
+                return commonHttp.get("/api/project/modify", {
                     proj_id: e,
                     data: {
                         name: t
@@ -3364,12 +3389,12 @@ function commonService(e, t, a) {
                 })
             },
             del: function (e) {
-                return a.post("/api/project/delete", {
+                return commonHttp.post("/api/project/delete", {
                     proj_id: e
                 })
             },
             move: function (e) {
-                return a.post("/api/project/move", {
+                return commonHttp.post("/api/project/move", {
                     sort: angular.toJson(e.sort),
                     parent_id: e.parent_id,
                     proj_id: e.proj_id,
@@ -3378,16 +3403,16 @@ function commonService(e, t, a) {
                 })
             }
         },
-        r = {
+        dashboard = {
             getList: function (e) {
-                return a.get("/api/dashboard/list", e).then(o)
+                return commonHttp.get("/api/dashboard/list", e).then(o)
             },
             getInfo: function (e) {
                 var t = {};
-                return e = angular.extend(t, e), a.get("/api/dashboard/info", e)
+                return e = angular.extend(t, e), commonHttp.get("/api/dashboard/info", e)
             },
             create: function (e) {
-                return a.post("/api/dashboard/create", {
+                return commonHttp.post("/api/dashboard/create", {
                     name: e.name,
                     proj_id: e.proj_id,
                     label: e.label || "",
@@ -3400,15 +3425,15 @@ function commonService(e, t, a) {
                 })
             },
             modify: function (e) {
-                return e.access_token = $.cookie("token"), a.post("/api/dashboard/modify", e)
+                return e.access_token = $.cookie("token"), commonHttp.post("/api/dashboard/modify", e)
             },
             del: function (e) {
-                return a.post("/api/dashboard/delete", {
+                return commonHttp.post("/api/dashboard/delete", {
                     dsh_id: e
                 })
             },
             move: function (e) {
-                return a.post("/api/dashboard/move", {
+                return commonHttp.post("/api/dashboard/move", {
                     sort: angular.toJson(e.sort),
                     dsh_id: e.dsh_id,
                     parent_id: e.parent_id,
@@ -3418,13 +3443,13 @@ function commonService(e, t, a) {
                 })
             },
             hide: function (e) {
-                return a.post("/api/dashboard/hide", e)
+                return commonHttp.post("/api/dashboard/hide", e)
             }
         },
         chart = {
             getInfo: function (e) {
                 var t = {};
-                return "string" == typeof e ? t.ct_id = e : t = angular.extend(e, t), a.post("/api/chart/info", t)
+                return "string" == typeof e ? t.ct_id = e : t = angular.extend(e, t), commonHttp.post("/api/chart/info", t)
             },
             getData: function (t) {
                 return e.post("/api/chart/data", {
@@ -3444,38 +3469,38 @@ function commonService(e, t, a) {
                         custom: 8
                     },
                     n = i[e.type];
-                return t.ct_type = n || 0, e.ct_type && (t.ct_type = e.ct_type), t.name = e.name, "view" == e.type ? (t.parent_id = e.parent_id, t.tb_id = e.tb_id, "number" == typeof e.ct_type && (t.ct_type = e.ct_type)) : "custom" == e.type || "gis" == e.type ? t.tb_ids = angular.toJson(e.tb_id) : t.tb_id = e.tb_id, e.dsh_meta && (t.dsh_meta = angular.toJson(e.dsh_meta)), a.post("/api/chart/create", t)
+                return t.ct_type = n || 0, e.ct_type && (t.ct_type = e.ct_type), t.name = e.name, "view" == e.type ? (t.parent_id = e.parent_id, t.tb_id = e.tb_id, "number" == typeof e.ct_type && (t.ct_type = e.ct_type)) : "custom" == e.type || "gis" == e.type ? t.tb_ids = angular.toJson(e.tb_id) : t.tb_id = e.tb_id, e.dsh_meta && (t.dsh_meta = angular.toJson(e.dsh_meta)), commonHttp.post("/api/chart/create", t)
             },
             copy: function (e) {
-                return a.get("/api/chart/copy", e)
+                return commonHttp.get("/api/chart/copy", e)
             },
             del: function (e) {
-                return e.dsh_meta && (e.dsh_meta = angular.toJson(e.dsh_meta)), a.post("/api/chart/delete", e)
+                return e.dsh_meta && (e.dsh_meta = angular.toJson(e.dsh_meta)), commonHttp.post("/api/chart/delete", e)
             },
             modify: function (e) {
-                return a.post("/api/chart/modify", e)
+                return commonHttp.post("/api/chart/modify", e)
             },
             getDbInfo: function (e) {
-                return a.get("/api/chart/database_info", {
+                return commonHttp.get("/api/chart/database_info", {
                     ct_id: e
                 })
             },
             modifyTb: function (e, t) {
-                return a.get("/api/chart/modify_tb", {
+                return commonHttp.get("/api/chart/modify_tb", {
                     ct_id: e,
                     tb_id: t
                 })
             },
             getRelationList: function (e) {
-                return a.get("/api/chart/rela_list", {
+                return commonHttp.get("/api/chart/rela_list", {
                     tb_id: e
                 }).then(o)
             },
             search: function (e) {
-                return a.post("/api/chart/search", e).then(o)
+                return commonHttp.post("/api/chart/search", e).then(o)
             },
             getSizeGroups: function (e, t, i, n, r) {
-                return r = r ? angular.toJson(r) : void 0, a.post("/api/chart/size_groups", {
+                return r = r ? angular.toJson(r) : void 0, commonHttp.post("/api/chart/size_groups", {
                     ct_id: e,
                     bubble_setting: angular.toJson(t),
                     drill_level: i,
@@ -3484,97 +3509,97 @@ function commonService(e, t, a) {
                 }).then(o)
             },
             getGisSizeGroups: function (e, t, i) {
-                return a.post("/api/chart/size_groups", {
+                return commonHttp.post("/api/chart/size_groups", {
                     ct_id: e,
                     bubble_setting: angular.toJson(t),
                     layer_level: i
                 }).then(o)
             },
             addRelaTb: function (e, t) {
-                return a.post("/api/chart/add_rela_tb", {
+                return commonHttp.post("/api/chart/add_rela_tb", {
                     ct_id: e,
                     tb_id: t
                 })
             },
             delRelaTb: function (e, t) {
-                return a.post("/api/chart/del_rela_tb", {
+                return commonHttp.post("/api/chart/del_rela_tb", {
                     ct_id: e,
                     tb_id: t
                 })
             },
             exportExcelType: function (e) {
-                return a.post("/api/export/get_file_type", e)
+                return commonHttp.post("/api/export/get_file_type", e)
             },
             exportLargeExcel: function (e) {
-                return a.post("/api/export/large_file", e)
+                return commonHttp.post("/api/export/large_file", e)
             },
             wholeRelaChain: function (e) {
-                return a.post("/api/chart/whole_rela_chain", {
+                return commonHttp.post("/api/chart/whole_rela_chain", {
                     tb_id: e.tb_id
                 })
             },
             tableUnion: function (e) {
-                return a.post("/api/chart/table_union", e)
+                return commonHttp.post("/api/chart/table_union", e)
             },
             cmpDateRange: function (e) {
-                return a.post("/api/chart/filter_cmp_date_range", e)
+                return commonHttp.post("/api/chart/filter_cmp_date_range", e)
             }
         };
-    var s = {
+    var db = {
             getField: function (e) {
                 var t = {
                     dstb_id: e
                 };
-                return a.get("/api/dstb/info", t).then(o)
+                return commonHttp.get("/api/dstb/info", t).then(o)
             },
             del: function (e) {
                 var t = {
                     dstb_id: e
                 };
-                return a.get("/api/dstb/delete", t)
+                return commonHttp.get("/api/dstb/delete", t)
             },
             getList: function () {
-                return a.get("/api/dstb/list").then(o)
+                return commonHttp.get("/api/dstb/list").then(o)
             },
             modify: function (e, t) {
                 var i = {
                     dstb_id: e,
                     data: t
                 };
-                return a.get("/api/dstb/modify", i).then(o)
+                return commonHttp.get("/api/dstb/modify", i).then(o)
             },
             getUpdateRecord: function (e) {
-                return a.get("/api/excel/list?time=" + (new Date).getTime(), e).then(o)
+                return commonHttp.get("/api/excel/list?time=" + (new Date).getTime(), e).then(o)
             },
             deleteFile: function (e, t) {
                 var i = {
                     dstb_id: e,
                     filetbname: t
                 };
-                return a.get("/api/dstb/delete_file", i).then(o)
+                return commonHttp.get("/api/dstb/delete_file", i).then(o)
             },
             excelCreate: function (e) {
-                return a.post("/api/excel/create", e, {
+                return commonHttp.post("/api/excel/create", e, {
                     errHint: !1
                 })
             },
             excelAppend: function (e) {
-                return a.post("/api/excel/append", e, {
+                return commonHttp.post("/api/excel/append", e, {
                     errHint: !1
                 })
             },
             excelReplace: function (e) {
-                return a.post("/api/excel/replace", e, {
+                return commonHttp.post("/api/excel/replace", e, {
                     errHint: !1
                 })
             },
             excelHistoryReplace: function (e) {
-                return a.post("/api/excel/replace_one", e, {
+                return commonHttp.post("/api/excel/replace_one", e, {
                     errHint: !1
                 })
             },
             excelDelete: function (e) {
-                return a.get("/api/excel/delete", e)
+                return commonHttp.get("/api/excel/delete", e)
             },
             startTask: function (t, a) {
                 return e.post("/api/dstb/start", {
@@ -3583,269 +3608,269 @@ function commonService(e, t, a) {
                 })
             },
             excelCheck: function (e) {
-                return a.post("/api/excel/check", e, {
+                return commonHttp.post("/api/excel/check", e, {
                     errHint: !1
                 })
             },
             excelModify: function (e) {
-                return a.post("/api/excel/modify", e, {
+                return commonHttp.post("/api/excel/modify", e, {
                     errHint: !1
                 })
             },
             subOwnWbList: function (e) {
-                return a.post("/api/folder/sub_own_list", e)
+                return commonHttp.post("/api/folder/sub_own_list", e)
             },
             extractTb: function (e) {
-                return a.post("/api/tb/extract", e)
+                return commonHttp.post("/api/tb/extract", e)
             },
             shareTbInfo: function (e) {
-                return a.post("/api/tb/share_info", e)
+                return commonHttp.post("/api/tb/share_info", e)
             },
             uploadPreview: function (e, t) {
-                return a.post("/api/excel/preview", e, {
+                return commonHttp.post("/api/excel/preview", e, {
                     errHint: t
                 })
             },
             uploadParser: function (e) {
-                return a.post("/api/excel/parser", e)
+                return commonHttp.post("/api/excel/parser", e)
             },
             getSchema: function (e) {
-                return a.post("/api/tb/schema", {
+                return commonHttp.post("/api/tb/schema", {
                     tb_id: e
                 })
             },
             checkFieldDependency: function (e) {
-                return a.post("/api/tb/check_field_dependency", e)
+                return commonHttp.post("/api/tb/check_field_dependency", e)
             },
             adjustTable: function (e) {
-                return a.post("/api/", e)
+                return commonHttp.post("/api/", e)
             },
             previewAdjustTable: function (e) {
-                return a.post("/api/excel/replace_preview", e)
+                return commonHttp.post("/api/excel/replace_preview", e)
             },
             excelRepeatCheck: function (e) {
-                return a.post("/api/excel/title_check", e)
+                return commonHttp.post("/api/excel/title_check", e)
             }
         },
-        l = {
+        tb = {
             modify: function (e) {
-                return a.post("/api/tb/modify", {
+                return commonHttp.post("/api/tb/modify", {
                     data: e
                 })
             },
             modifyFieldStatus: function (e, t) {
-                return a.post("/api/tb/field_selected/modify", {
+                return commonHttp.post("/api/tb/field_selected/modify", {
                     tb_id: e,
                     field_ids: t
                 })
             },
             getStatusData: function (e) {
-                return a.post("/api/tb/field_selected/query", {
+                return commonHttp.post("/api/tb/field_selected/query", {
                     tb_id: e
                 })
             },
             getList: function () {
-                return a.get("/api/tb/list").then(o)
+                return commonHttp.get("/api/tb/list").then(o)
             },
             copy: function (e) {
-                return a.post("/api/data_union/union_copy", e)
+                return commonHttp.post("/api/data_union/union_copy", e)
             },
             getInfo: function (e) {
-                return a.get("/api/tb/info", {
+                return commonHttp.get("/api/tb/info", {
                     tb_id: e
                 })
             },
             getMultiInfo: function (e) {
-                return a.get("/api/tb/multi_info", e)
+                return commonHttp.get("/api/tb/multi_info", e)
             },
             preview: function (e) {
-                return a.post("/api/tb/preview", e).then(o)
+                return commonHttp.post("/api/tb/preview", e).then(o)
             },
             del: function (e) {
-                return a.post("/api/tb/delete", {
+                return commonHttp.post("/api/tb/delete", {
                     tb_id: e
                 })
             },
             delTableWithChart: function (e, t, i) {
-                return a.post("/api/tb/delete", {
+                return commonHttp.post("/api/tb/delete", {
                     tb_id: e,
                     session_id: t,
                     verify_code: i
                 })
             },
             getJoinInfo: function (e) {
-                return a.get("/api/tb/join_info", {
+                return commonHttp.get("/api/tb/join_info", {
                     tb_id: e
                 }).then(o)
             },
             getJoinErrorReport: function (e) {
-                return a.post("/api/wb/profile", e)
+                return commonHttp.post("/api/wb/profile", e)
             },
             getJoinProfileReport: function (e) {
-                return a.post("/api/wb/profile_report", {
+                return commonHttp.post("/api/wb/profile_report", {
                     tb_id: e
                 })
             },
             getModelStruct: function (e) {
-                return a.get("/api/tb/model_struct", {
+                return commonHttp.get("/api/tb/model_struct", {
                     tb_id: e
                 })
             },
             getStatus: function (e, t) {
-                return a.get("/api/tb/status", {
+                return commonHttp.get("/api/tb/status", {
                     tb_id: e,
                     view_status_read: t
                 })
             },
             getStorageAccount: function () {
-                return a.get("/api/tb/stat").then(o)
+                return commonHttp.get("/api/tb/stat").then(o)
             },
             modifyTag: function (e) {
-                return a.post("/api/tb/modify_tag", {
+                return commonHttp.post("/api/tb/modify_tag", {
                     data: JSON.stringify(e)
                 })
             },
             getTbsField: function (e) {
-                return a.post("/api/dstb/infos", e)
+                return commonHttp.post("/api/dstb/infos", e)
             },
             partitionSet: function (e) {
-                return a.post("/api/tb/partition/set", {
+                return commonHttp.post("/api/tb/partition/set", {
                     tb_id: e.tb_id,
                     base_field: e.base_field,
                     param: e.param
                 })
             },
             partitionDel: function (e) {
-                return a.post("/api/tb/partition/remove", {
+                return commonHttp.post("/api/tb/partition/remove", {
                     tb_id: e.tb_id
                 })
             },
             wholeJoinChain: function (e) {
-                return a.post("/api/tb/whole_join_chain", {
+                return commonHttp.post("/api/tb/whole_join_chain", {
                     tb_id: e.tb_id
                 })
             },
             sqlTrans: function (e) {
-                return a.post("/api/tb/sql_trans", e)
+                return commonHttp.post("/api/tb/sql_trans", e)
             },
             sqlScript: function (e) {
-                return a.post("/api/sql_script/check", e)
+                return commonHttp.post("/api/sql_script/check", e)
             },
             sqlFormat: function (e) {
-                return a.post("/api/sql_script/format", e)
+                return commonHttp.post("/api/sql_script/format", e)
             },
             tableFieldFilter: function (e) {
-                return a.post("/api/field/filter", e)
+                return commonHttp.post("/api/field/filter", e)
             },
             batchMove: function (e) {
-                return a.post("/api/folder/change_batch", e)
+                return commonHttp.post("/api/folder/change_batch", e)
             },
             batchDeleteTables: function (e) {
-                return a.post("/api/tb/delete_batch", e)
+                return commonHttp.post("/api/tb/delete_batch", e)
             },
             checkTablesRely: function (e) {
-                return a.post("/api/tb/list_check_rely", e)
+                return commonHttp.post("/api/tb/list_check_rely", e)
             },
             gisTransfer: function (e) {
-                return a.post("/api/gis/transfer", e)
+                return commonHttp.post("/api/gis/transfer", e)
             },
             gisModify: function (e) {
-                return a.post("/api/gis/modify", e)
+                return commonHttp.post("/api/gis/modify", e)
             },
             updateModeCheck: function (e) {
-                return a.post("/api/tb/update_mode/check", e)
+                return commonHttp.post("/api/tb/update_mode/check", e)
             },
             updateModeModify: function (e) {
-                return a.post("/api/tb/update_mode/modify", e)
+                return commonHttp.post("/api/tb/update_mode/modify", e)
             },
             getPartitionNum: function (e) {
-                return a.post("/api/tb/partition/num", e)
+                return commonHttp.post("/api/tb/partition/num", e)
             },
             triggerFullUpdate: function (e) {
-                return a.post("/api/tb/update", e)
+                return commonHttp.post("/api/tb/update", e)
             },
             replaceCheck: function (e) {
-                return a.post("/api/wb/replace_check", e)
+                return commonHttp.post("/api/wb/replace_check", e)
             },
             getTplExcel: function (e) {
-                return a.get("/api/personal/tpl_excel", e)
+                return commonHttp.get("/api/personal/tpl_excel", e)
             },
             tplExport: function (e) {
-                return a.get("/api/personal/export", e)
+                return commonHttp.get("/api/personal/export", e)
             },
             modelCheck: function (e) {
-                return a.get("/api/data_aggr/model_check", e)
+                return commonHttp.get("/api/data_aggr/model_check", e)
             },
             viewExec: function (e) {
-                return a.get("/api/view/exec", e)
+                return commonHttp.get("/api/view/exec", e)
             },
             uploadRenameFields: function (e) {
-                return a.post("/api/field/upload_templete", e)
+                return commonHttp.post("/api/field/upload_templete", e)
             },
             exportSmallTbFile: function (e) {
-                return a.post("/api/tb/export_tb", e)
+                return commonHttp.post("/api/tb/export_tb", e)
             },
             exportTbFile: function (e) {
-                return a.post("/api/export/tb_file", e)
+                return commonHttp.post("/api/export/tb_file", e)
             },
             parseCode: function (e) {
-                return a.post("/api/general/create", e)
+                return commonHttp.post("/api/general/create", e)
             },
             getFieldParseCode: function (e) {
-                return a.get("/api/general/info", e)
+                return commonHttp.get("/api/general/info", e)
             },
             joinTbPreview: function (e) {
-                return a.post("/api/wb/preview", e)
+                return commonHttp.post("/api/wb/preview", e)
             },
             joinTbCreate: function (e) {
-                return a.post("/api/wb/create", e)
+                return commonHttp.post("/api/wb/create", e)
             },
             joinTbInfo: function (e) {
-                return a.post("/api/dstb/info", e)
+                return commonHttp.post("/api/dstb/info", e)
             },
             joinTbCheckPreview: function (e) {
-                return a.post("/api/wb/modify_preview", e)
+                return commonHttp.post("/api/wb/modify_preview", e)
             },
             joinTbModify: function (e) {
-                return a.post("/api/wb/modify", e)
+                return commonHttp.post("/api/wb/modify", e)
             }
         },
-        d = {
+        field = {
             getList: function (e) {
-                return a.get("/api/tb/info", {
+                return commonHttp.get("/api/tb/info", {
                     tb_id: e
                 })
             },
             getEditableSchema: function (e) {
-                return a.get("/api/tb/editable_schema", {
+                return commonHttp.get("/api/tb/editable_schema", {
                     tb_id: e
                 })
             },
             create: function (e) {
-                return a.post("/api/field/create", e)
+                return commonHttp.post("/api/field/create", e)
             },
             modify: function (e) {
-                return a.post("/api/field/modify", e)
+                return commonHttp.post("/api/field/modify", e)
             },
             del: function (e, t) {
-                return a.post("/api/field/delete", {
+                return commonHttp.post("/api/field/delete", {
                     tb_id: t,
                     fid: e
                 })
             },
             getRange: function (e, t, i) {
-                return a.post("/api/field/range", {
+                return commonHttp.post("/api/field/range", {
                     fid: t,
                     ct_id: i,
                     tb_id: e
                 })
             },
             getFilteredRange: function (e, t, i, n) {
-                return void 0 === n ? a.post("/api/enum_color/field_range", {
+                return void 0 === n ? commonHttp.post("/api/enum_color/field_range", {
                     ct_id: e,
                     tb_id: t,
                     field: angular.toJson(i)
-                }) : a.post("/api/enum_color/gis_field_range", {
+                }) : commonHttp.post("/api/enum_color/gis_field_range", {
                     ct_id: e,
                     tb_id: t,
                     field: angular.toJson(i),
@@ -3853,100 +3878,100 @@ function commonService(e, t, a) {
                 })
             },
             url_preview: function (e, t) {
-                return a.post("/api/field/url_preview", {
+                return commonHttp.post("/api/field/url_preview", {
                     tb_id: e,
                     field_ids: angular.toJson(t)
                 }).then(o)
             },
             extract_preview: function (e, t) {
-                return a.post("/api/field/extract_preview", {
+                return commonHttp.post("/api/field/extract_preview", {
                     tb_id: e,
                     fields: angular.toJson(t)
                 }).then(o)
             },
             extract_url: function (e, t) {
-                return a.post("/api/field/extract_url", {
+                return commonHttp.post("/api/field/extract_url", {
                     tb_id: e,
                     fields: angular.toJson(t)
                 }).then(o)
             },
             merge: function (e, t) {
-                return a.post("/api/field/merge", {
+                return commonHttp.post("/api/field/merge", {
                     tb_id: e,
                     info: angular.toJson(t)
                 }).then(o)
             },
             getAggregatorLen: function (e) {
-                return a.post("/api/field/get_length", e)
+                return commonHttp.post("/api/field/get_length", e)
             }
         },
-        c = {
+        share = {
             allList: function (e) {
                 var t = {};
-                return t = angular.extend(e, t), a.get("/api/share/all_list", t)
+                return t = angular.extend(e, t), commonHttp.get("/api/share/all_list", t)
             },
             getList: function (e) {
                 var t = {};
-                return t = angular.extend(e, t), a.get("/api/share/list", t)
+                return t = angular.extend(e, t), commonHttp.get("/api/share/list", t)
             },
             share: function (e) {
                 var t = {};
-                return t = angular.extend(e, t), a.post("/api/share/commit", t)
+                return t = angular.extend(e, t), commonHttp.post("/api/share/commit", t)
             },
             modify: function (e) {
-                return a.post("/api/share/modify", e)
+                return commonHttp.post("/api/share/modify", e)
             }
         },
-        p = {
+        ds = {
             getConnStatus: function (e) {
-                return a.post("/api/ds/conn", e)
+                return commonHttp.post("/api/ds/conn", e)
             },
             connNopwd: function (e) {
-                return a.post("/api/ds/nopawd", e)
+                return commonHttp.post("/api/ds/nopawd", e)
             },
             createApi: function (e) {
-                return a.post("/api/ds/create", e)
+                return commonHttp.post("/api/ds/create", e)
             },
             getNameAndTag: function () {
-                return a.get("/api/ds/list").then(o)
+                return commonHttp.get("/api/ds/list").then(o)
             },
             getList: function (e) {
-                return a.get("/api/ds/list").then(o)
+                return commonHttp.get("/api/ds/list").then(o)
             },
             getListForDataSource: function (e) {
-                return a.get("/api/ds/nslist", e)
+                return commonHttp.get("/api/ds/nslist", e)
             },
             getTree: function () {
-                return a.get("/api/ds/tree").then(o)
+                return commonHttp.get("/api/ds/tree").then(o)
             },
             info: function (e) {
-                return a.get("/api/ds/info", e)
+                return commonHttp.get("/api/ds/info", e)
             },
             modify: function (e) {
-                return e = e || {}, a.post("/api/ds/modify", e)
+                return e = e || {}, commonHttp.post("/api/ds/modify", e)
             },
             startSyncTask: function (e, t, i) {
-                return a.get("/api/ds/sync", {
+                return commonHttp.get("/api/ds/sync", {
                     ds_id: e,
                     new_table: t,
                     db_type: i
                 })
             },
             startBaiduSyncCost: function (e) {
-                return a.get("/api/rtapi/single_cost", {
+                return commonHttp.get("/api/rtapi/single_cost", {
                     ds_id: e
                 })
             },
             del: function (e) {
-                return a.post("/api/ds/delete", {
+                return commonHttp.post("/api/ds/delete", {
                     ds_id: e
                 })
             },
             getInitInfo: function () {
-                return a.get("/api/ds/all")
+                return commonHttp.get("/api/ds/all")
             },
             getResultForSearch: function (e, t) {
-                return a.get("api/ds/search", {
+                return commonHttp.get("api/ds/search", {
                     stype: t,
                     content: e
                 })
@@ -3971,181 +3996,181 @@ function commonService(e, t, a) {
                 })
             },
             openDataList: function () {
-                return a.get("/api/ds/publiclist")
+                return commonHttp.get("/api/ds/publiclist")
             },
             create: function (e) {
-                return a.post("/api/ds/create", e)
+                return commonHttp.post("/api/ds/create", e)
             },
             conn: function (e) {
-                return a.post("/api/ds/conn", e)
+                return commonHttp.post("/api/ds/conn", e)
             },
             tbList: function () {
-                return a.get("/api/ds/tblist")
+                return commonHttp.get("/api/ds/tblist")
             },
             username_verify: function (e) {
-                return a.post("/api/ds/verify", e)
+                return commonHttp.post("/api/ds/verify", e)
             },
             jyw_klist: function () {
-                return a.post("/api/jyw/klist")
+                return commonHttp.post("/api/jyw/klist")
             },
             set_sync: function (e) {
-                return a.post("/api/ds/sync", e)
+                return commonHttp.post("/api/ds/sync", e)
             },
             mobile_default_bind: function (e) {
-                return a.post("/api/sms/defaultbind", e)
+                return commonHttp.post("/api/sms/defaultbind", e)
             },
             mobile_unbind_all: function (e) {
-                return a.post("/api/sms/unbindall", e)
+                return commonHttp.post("/api/sms/unbindall", e)
             },
             warn_mobile_list: function (e) {
-                return a.post("/api/sms/list")
+                return commonHttp.post("/api/sms/list")
             },
             warn_mobile_del: function (e) {
-                return a.post("/api/sms/delete", {
+                return commonHttp.post("/api/sms/delete", {
                     phone: e.phone
                 })
             },
             warn_mobile_vcode: function (e) {
-                return a.post("/api/sms/vcode", {
+                return commonHttp.post("/api/sms/vcode", {
                     phone: e.phone,
                     new_phone: e.new_phone
                 })
             },
             warn_mobile_verify: function (e) {
-                return a.post("/api/sms/verify", {
+                return commonHttp.post("/api/sms/verify", {
                     phone: e.phone,
                     new_phone: e.new_phone,
                     vcode: e.vcode
                 })
             },
             ds_amount: function () {
-                return a.get("/api/ds/stat")
+                return commonHttp.get("/api/ds/stat")
             },
             kstList: function (e) {
-                return a.post("/api/kst/list", e)
+                return commonHttp.post("/api/kst/list", e)
             },
             kstConn: function (e) {
-                return a.post("/api/kst/conn", e)
+                return commonHttp.post("/api/kst/conn", e)
             },
             kstCreate: function (e) {
-                return a.post("/api/kst/create", e)
+                return commonHttp.post("/api/kst/create", e)
             },
             kstInfo: function (e) {
-                return a.post("/api/kst/info", e)
+                return commonHttp.post("/api/kst/info", e)
             },
             kstModify: function (e) {
-                return a.post("/api/kst/modify", e)
+                return commonHttp.post("/api/kst/modify", e)
             },
             baiduRegion: function () {
-                return a.get("/api/rtapi/city")
+                return commonHttp.get("/api/rtapi/city")
             },
             baiduIndex: function () {
-                return a.get("/api/inapi/city")
+                return commonHttp.get("/api/inapi/city")
             },
             baiduIndexCheckKeyWords: function (e) {
-                return a.post("/api/inapi/check", e)
+                return commonHttp.post("/api/inapi/check", e)
             },
             modifyDbBaiduSearchTask: function (e) {
-                return a.post("/api/rtapi/control", e)
+                return commonHttp.post("/api/rtapi/control", e)
             },
             modifyDbBaiduIndexTask: function (e) {
-                return a.post("/api/inapi/control", e)
+                return commonHttp.post("/api/inapi/control", e)
             },
             baiduSearchConfig: function (e) {
-                return a.post("/api/rtapi/config", e)
+                return commonHttp.post("/api/rtapi/config", e)
             },
             baiduIndexConfig: function (e) {
-                return a.post("/api/inapi/config", e)
+                return commonHttp.post("/api/inapi/config", e)
             },
             modifyDbBaiduSearch: function (e) {
-                return a.post("/api/rtapi/modify", e)
+                return commonHttp.post("/api/rtapi/modify", e)
             },
             modifyDbBaiduIndex: function (e) {
-                return a.post("/api/inapi/modify", e)
+                return commonHttp.post("/api/inapi/modify", e)
             },
             createDbBaiduSearch: function (e) {
-                return a.post("/api/ds/create", e)
+                return commonHttp.post("/api/ds/create", e)
             },
             createDbBaiduSearchTask: function (e) {
-                return a.post("/api/rtapi/create", e)
+                return commonHttp.post("/api/rtapi/create", e)
             },
             createDbBaiduIndexTask: function (e) {
-                return a.post("/api/inapi/create", e)
+                return commonHttp.post("/api/inapi/create", e)
             },
             deleteDbBaiduSearchTask: function (e) {
-                return a.post("/api/rtapi/delete", e)
+                return commonHttp.post("/api/rtapi/delete", e)
             },
             deleteDbBaiduIndexTask: function (e) {
-                return a.post("/api/inapi/delete", e)
+                return commonHttp.post("/api/inapi/delete", e)
             },
             getDbBaiduSearchTaskList: function (e) {
-                return a.post("/api/rtapi/rtlist", e)
+                return commonHttp.post("/api/rtapi/rtlist", e)
             },
             getDbBaiduIndexTaskList: function (e) {
-                return a.post("/api/inapi/inlist", e)
+                return commonHttp.post("/api/inapi/inlist", e)
             },
             startBaiduTaskSyncCost: function (e) {
-                return a.get("/api/rtapi/single_cost", e)
+                return commonHttp.get("/api/rtapi/single_cost", e)
             },
             startBaiduIndexTaskSyncCost: function (e) {
-                return a.get("/api/inapi/single_cost", e)
+                return commonHttp.get("/api/inapi/single_cost", e)
             },
             startBaiduSyncTask: function (e) {
-                return a.post("/api/rtapi/sync", e)
+                return commonHttp.post("/api/rtapi/sync", e)
             },
             startBaiduIndexSyncTask: function (e) {
-                return a.post("/api/inapi/sync", e)
+                return commonHttp.post("/api/inapi/sync", e)
             },
             baiduCompanySetting: function (e) {
-                return a.post("/api/rtapi/field_info", e)
+                return commonHttp.post("/api/rtapi/field_info", e)
             },
             modifyCompanySetting: function (e) {
-                return a.post("/api/rtapi/field_modify", e)
+                return commonHttp.post("/api/rtapi/field_modify", e)
             },
             wechatDs: {
                 createWechatIndex: function (e) {
-                    return a.post("/api/ds/create", e)
+                    return commonHttp.post("/api/ds/create", e)
                 },
                 deleteWechatTask: function (e) {
-                    return a.post("/api/wechat/delete", e)
+                    return commonHttp.post("/api/wechat/delete", e)
                 },
                 getTaskList: function (e) {
-                    return a.post("/api/wechat/inlist", e)
+                    return commonHttp.post("/api/wechat/inlist", e)
                 },
                 modifyWechatTask: function (e) {
-                    return a.post("/api/wechat/modify", e)
+                    return commonHttp.post("/api/wechat/modify", e)
                 },
                 createWechatTask: function (e) {
-                    return a.post("/api/wechat/create", e)
+                    return commonHttp.post("/api/wechat/create", e)
                 },
                 wechatIndexConfig: function (e) {
-                    return a.post("/api/wechat/config", e)
+                    return commonHttp.post("/api/wechat/config", e)
                 },
                 wechatTaskSwitchControl: function (e) {
-                    return a.post("/api/wechat/control", e)
+                    return commonHttp.post("/api/wechat/control", e)
                 }
             },
             toutiaoDs: {
                 createToutiaoIndex: function (e) {
-                    return a.post("/api/ds/create", e)
+                    return commonHttp.post("/api/ds/create", e)
                 },
                 deleteToutiaoTask: function (e) {
-                    return a.post("/api/toutiao/delete", e)
+                    return commonHttp.post("/api/toutiao/delete", e)
                 },
                 getTaskList: function (e) {
-                    return a.post("/api/toutiao/inlist", e)
+                    return commonHttp.post("/api/toutiao/inlist", e)
                 },
                 modifyToutiaoTask: function (e) {
-                    return a.post("/api/toutiao/modify", e)
+                    return commonHttp.post("/api/toutiao/modify", e)
                 },
                 createToutiaoTask: function (e) {
-                    return a.post("/api/toutiao/create", e)
+                    return commonHttp.post("/api/toutiao/create", e)
                 },
                 toutiaoIndexConfig: function (e) {
-                    return a.post("/api/toutiao/config", e)
+                    return commonHttp.post("/api/toutiao/config", e)
                 },
                 toutiaoTaskSwitchControl: function (e) {
-                    return a.post("/api/toutiao/control", e)
+                    return commonHttp.post("/api/toutiao/control", e)
                 }
             },
             indexDs: {
@@ -4173,137 +4198,137 @@ function commonService(e, t, a) {
                     return a
                 },
                 getTaskList: function (e) {
-                    return a.post("/api/index/inlist", e)
+                    return commonHttp.post("/api/index/inlist", e)
                 },
                 createTask: function (e) {
-                    return a.post("/api/index/create", e)
+                    return commonHttp.post("/api/index/create", e)
                 },
                 switchTask: function (e) {
-                    return a.post("/api/index/control", e)
+                    return commonHttp.post("/api/index/control", e)
                 },
                 deleteTask: function (e) {
-                    return a.post("/api/index/delete", e)
+                    return commonHttp.post("/api/index/delete", e)
                 },
                 getTaskInfo: function (e) {
-                    return a.post("/api/index/config", e)
+                    return commonHttp.post("/api/index/config", e)
                 },
                 modifyTask: function (e) {
-                    return a.post("/api/index/modify", e)
+                    return commonHttp.post("/api/index/modify", e)
                 },
                 checkKeyWords: function (e) {
-                    return a.post("/api/index/check", e)
+                    return commonHttp.post("/api/index/check", e)
                 },
                 areaList: function (e) {
-                    return a.get("/api/index/city", e)
+                    return commonHttp.get("/api/index/city", e)
                 }
             },
             weiboDs: {
                 deleteTask: function (e) {
-                    return a.post("/api/toutiao/delete", e)
+                    return commonHttp.post("/api/toutiao/delete", e)
                 },
                 getTaskList: function (e) {
-                    return a.post("/api/web/inlist", e)
+                    return commonHttp.post("/api/web/inlist", e)
                 },
                 modifyTask: function (e) {
-                    return a.post("/api/toutiao/modify", e)
+                    return commonHttp.post("/api/toutiao/modify", e)
                 },
                 createToutiaoTask: function (e) {
-                    return a.post("/api/toutiao/create", e)
+                    return commonHttp.post("/api/toutiao/create", e)
                 },
                 toutiaoIndexConfig: function (e) {
-                    return a.post("/api/toutiao/config", e)
+                    return commonHttp.post("/api/toutiao/config", e)
                 },
                 toutiaoTaskSwitchControl: function (e) {
-                    return a.post("/api/toutiao/control", e)
+                    return commonHttp.post("/api/toutiao/control", e)
                 }
             },
             dbTypeInfo: function (e) {
-                return a.get("/api/ds/category", e)
+                return commonHttp.get("/api/ds/category", e)
             },
             getCTableList: function (e) {
-                return a.post("/api/ds/cdstb", e)
+                return commonHttp.post("/api/ds/cdstb", e)
             },
             getTbInfo: function (e) {
-                return a.post("/api/ds/tbinfo", e)
+                return commonHttp.post("/api/ds/tbinfo", e)
             },
             getDsSheet: function (e) {
-                return a.post("/api/ds/sheet", e)
+                return commonHttp.post("/api/ds/sheet", e)
             },
             getDsTask: function (e) {
-                return a.post("/api/ds/task", e)
+                return commonHttp.post("/api/ds/task", e)
             },
             delete: function (e) {
-                return a.post("/api/ds/delete", e)
+                return commonHttp.post("/api/ds/delete", e)
             },
             getGaReports: function (e) {
-                return a.get("/api/ga/dreports", e)
+                return commonHttp.get("/api/ga/dreports", e)
             },
             getGaInfo: function (e) {
-                return a.post("/api/ga/info", e)
+                return commonHttp.post("/api/ga/info", e)
             },
             previewGa: function (e) {
-                return a.post("/api/ga/preview", e)
+                return commonHttp.post("/api/ga/preview", e)
             },
             getBdpDeployCodeToken: function (e) {
-                return a.post("/api/journal/token", e)
+                return commonHttp.post("/api/journal/token", e)
             },
             pwdBatchPreview: function (e) {
-                return a.post("/api/ds_batch/preview", e)
+                return commonHttp.post("/api/ds_batch/preview", e)
             },
             pwdBatchModify: function (e) {
-                return a.post("/api/ds_batch/modify", e)
+                return commonHttp.post("/api/ds_batch/modify", e)
             },
             saveUserSync: function (e) {
-                return a.post("/api/ds/usersync", e)
+                return commonHttp.post("/api/ds/usersync", e)
             },
             getJumpInfo: function (e) {
-                return a.get("/api/chart/jump_info", e)
+                return commonHttp.get("/api/chart/jump_info", e)
             },
             saveJumpInfo: function (e) {
-                return a.post("/api/chart/jump_save", e)
+                return commonHttp.post("/api/chart/jump_save", e)
             },
             delJumpInfo: function (e) {
-                return a.post("/api/chart/jump_delete", e)
+                return commonHttp.post("/api/chart/jump_delete", e)
             },
             checkJumpInfo: function (e) {
-                return a.get("/api/chart/jump_check", e)
+                return commonHttp.get("/api/chart/jump_check", e)
             },
             getCodeImg: function (e) {
-                return a.get("/api/ds/specialsync", e)
+                return commonHttp.get("/api/ds/specialsync", e)
             }
         },
-        u = {
+        ds_field = {
             field_list: function (e) {
-                return a.post("/api/ds_field/field_list", e)
+                return commonHttp.post("/api/ds_field/field_list", e)
             },
             field_del: function (e) {
-                return a.post("/api/ds_field/field_del", e)
+                return commonHttp.post("/api/ds_field/field_del", e)
             },
             field_modify: function (e) {
-                return a.post("/api/ds_field/field_modify", e)
+                return commonHttp.post("/api/ds_field/field_modify", e)
             }
         },
-        h = {
+        adv_date = {
             del: function (e) {
-                return a.post("/api/adv_date/del", {
+                return commonHttp.post("/api/adv_date/del", {
                     opt_id: e
                 })
             },
             global_del: function (e, t) {
-                return a.post("/api/adv_date/del", {
+                return commonHttp.post("/api/adv_date/del", {
                     opt_id: e,
                     df_id: t
                 })
             },
             modify: function (e, t, i) {
-                return a.post("/api/adv_date/modify", {
+                return commonHttp.post("/api/adv_date/modify", {
                     ct_id: e,
                     opt_id: t,
                     data: i
                 })
             },
             global_modify: function (e, t, i, n) {
-                return a.post("/api/adv_date/modify", {
+                return commonHttp.post("/api/adv_date/modify", {
                     dsh_id: e,
                     opt_id: t,
                     df_id: i,
@@ -4311,32 +4336,32 @@ function commonService(e, t, a) {
                 })
             },
             list: function (e) {
-                return a.post("/api/adv_date/list", {
+                return commonHttp.post("/api/adv_date/list", {
                     ct_id: e
                 })
             },
             info: function (e) {
-                return a.post("/api/adv_date/info", {
+                return commonHttp.post("/api/adv_date/info", {
                     opt_id: e
                 })
             },
             order: function (e, t) {
-                return a.post("/api/adv_date/order", {
+                return commonHttp.post("/api/adv_date/order", {
                     ct_id: e,
                     options: t
                 })
             }
         },
-        f = {
+        warn = {
             add: function (e) {
-                return a.post("/api/warn/add", {
+                return commonHttp.post("/api/warn/add", {
                     ct_id: e.ct_id,
                     rule_id: e.rule_id,
                     data: angular.toJson(e.data)
                 })
             },
             modify: function (e) {
-                return a.get("/api/warn/modify", {
+                return commonHttp.get("/api/warn/modify", {
                     ct_id: e.ct_id,
                     rule_id: e.rule_id,
                     data: e.data,
@@ -4344,14 +4369,14 @@ function commonService(e, t, a) {
                 })
             },
             del: function (e) {
-                return a.get("/api/warn/delete", {
+                return commonHttp.get("/api/warn/delete", {
                     ct_id: e.ct_id,
                     rule_id: e.rule_id,
                     warn_id: e.warn_id
                 })
             },
             warnSwitch: function (e) {
-                return a.get("/api/warn/switch", {
+                return commonHttp.get("/api/warn/switch", {
                     ct_id: e.ct_id,
                     rule_id: e.rule_id,
                     open_warn_ids: e.open_warn_ids,
@@ -4359,47 +4384,47 @@ function commonService(e, t, a) {
                 })
             }
         },
-        g = {
+        model = {
             modify: function (e) {
-                return a.post("/api/model/modify", e)
+                return commonHttp.post("/api/model/modify", e)
             },
             preview: function (e) {
-                return a.post("/api/model/train_set_preview", e)
+                return commonHttp.post("/api/model/train_set_preview", e)
             },
             result: function (e) {
-                return a.post("/api/model/result", e)
+                return commonHttp.post("/api/model/result", e)
             },
             list: function (e) {
-                return a.post("/api/model/list", e)
+                return commonHttp.post("/api/model/list", e)
             },
             info: function (e) {
-                return a.post("/api/model/info", e)
+                return commonHttp.post("/api/model/info", e)
             },
             del: function (e) {
-                return a.post("/api/model/delete", e)
+                return commonHttp.post("/api/model/delete", e)
             },
             saveClusterRs: function (e) {
-                return a.post("/api/model/result_commit", e)
+                return commonHttp.post("/api/model/result_commit", e)
             }
         },
-        m = {
+        folder = {
             getList: function () {
-                return a.post("/api/folder/list").then(o)
+                return commonHttp.post("/api/folder/list").then(o)
             },
             del: function (e, t) {
-                return a.get("/api/folder/delete", {
+                return commonHttp.get("/api/folder/delete", {
                     folder_id: e,
                     mode: t
                 })
             },
             modify: function (e) {
-                return a.post("/api/folder/modify", e)
+                return commonHttp.post("/api/folder/modify", e)
             },
             create: function (e) {
-                return a.post("/api/folder/create", e)
+                return commonHttp.post("/api/folder/create", e)
             },
             change: function (e) {
-                return a.post("/api/folder/change", {
+                return commonHttp.post("/api/folder/change", {
                     tb_id: e.tb_id,
                     to_folder: e.to_folder,
                     to_seq: e.to_seq,
@@ -4407,84 +4432,84 @@ function commonService(e, t, a) {
                 })
             },
             change_batch: function (e) {
-                return a.post("/api/folder/change_batch", {
+                return commonHttp.post("/api/folder/change_batch", {
                     change_folders: e
                 })
             },
             modify_folder_rel: function (e) {
-                return a.post("/api/folder/modify_folder_rel", {
+                return commonHttp.post("/api/folder/modify_folder_rel", {
                     tb_id: e.tb_id,
                     folder_rels: e.tb_status
                 })
             },
             modify_seq: function (e) {
-                return a.post("/api/folder/modify_seq", {
+                return commonHttp.post("/api/folder/modify_seq", {
                     seq_no: e.seq_no,
                     folder_id: e.folder_id
                 })
             },
             modify_parent: function (e) {
-                return a.post("/api/folder/modify_parent", {
+                return commonHttp.post("/api/folder/modify_parent", {
                     seq_no: e.seq_no,
                     folder_id: e.folder_id,
                     parent_id: e.parent_id
                 })
             },
             getStructure: function () {
-                return a.post("/api/folder/get_tree")
+                return commonHttp.post("/api/folder/get_tree")
             },
             getStructureWithParam: function (e) {
-                return a.post("/api/folder/get_tree_with_tblist", e)
+                return commonHttp.post("/api/folder/get_tree_with_tblist", e)
             },
             getWorktable: function (e) {
-                return a.get("/api/folder/list_only_tb", e)
+                return commonHttp.get("/api/folder/list_only_tb", e)
             },
             getTableSiblings: function (e) {
-                return a.get("/api/folder/get_current_tb", e)
+                return commonHttp.get("/api/folder/get_current_tb", e)
             },
             getTableFolderInfo: function (e) {
-                return a.post("/api/folder/info", e)
+                return commonHttp.post("/api/folder/info", e)
             },
             searchFolderAndTable: function (e) {
-                return a.get("/api/folder/search", e)
+                return commonHttp.get("/api/folder/search", e)
             },
             filterFolderAndTable: function (e) {
-                return a.get("/api/folder/filter", e)
+                return commonHttp.get("/api/folder/filter", e)
             }
         },
-        _ = {
+        fieldComment = {
             create: function (e) {
-                return a.get("/api/field_comment/create", e)
+                return commonHttp.get("/api/field_comment/create", e)
             },
             modify: function (e) {
-                return a.get("/api/field_comment/modify", {
+                return commonHttp.get("/api/field_comment/modify", {
                     ct_id: e.ct_id,
                     fc_id: e.fc_id,
                     comment: e.comment
                 })
             },
             del: function (e, t) {
-                return a.get("/api/field_comment/delete", {
+                return commonHttp.get("/api/field_comment/delete", {
                     ct_id: e,
                     fc_id: t
                 })
             }
         },
-        v = {
+        dash_global_filter = {
             list: function (e) {
-                return a.post("/api/dsh_filter/list", {
+                return commonHttp.post("/api/dsh_filter/list", {
                     dsh_id: e.dash_id,
                     rule_id: e.rule_id
                 })
             },
             modify: function (e) {
-                return a.post("/api/dsh_filter/commit", {
+                return commonHttp.post("/api/dsh_filter/commit", {
                     dsh_id: e.dash_id,
                     data: e.dash_filter_list
                 })
             },
             item: function (e) {
-                return a.post("/api/dsh_filter/item", {
+                return commonHttp.post("/api/dsh_filter/item", {
                     dsh_id: e.dash_id,
                     sdo_id: e.sdo_id,
                     rule_id: e.rule_id,
@@ -4492,7 +4517,7 @@ function commonService(e, t, a) {
                 })
             },
             range: function (e) {
-                return a.post("/api/dsh_filter/range", {
+                return commonHttp.post("/api/dsh_filter/range", {
                     dsh_id: e.dash_id,
                     df_id: e.df_id,
                     rule_id: e.rule_id,
@@ -4502,56 +4527,56 @@ function commonService(e, t, a) {
                 })
             }
         },
-        b = {
+        user = {
             userList: function (e) {
-                return a.post("/api/sub/list", e)
+                return commonHttp.post("/api/sub/list", e)
             },
             modifyPersonal: function (e) {
-                return a.post("/api/user/modify_personal", e)
+                return commonHttp.post("/api/user/modify_personal", e)
             },
             modifyInfo: function (e) {
-                return a.post("/api/user/modify_info", e)
+                return commonHttp.post("/api/user/modify_info", e)
             },
             groupList: function (e) {
-                return a.post("/api/group/list", e)
+                return commonHttp.post("/api/group/list", e)
             },
             modify: function (e) {
-                return a.post("/api/sub/modify", e)
+                return commonHttp.post("/api/sub/modify", e)
             },
             setFrozen: function (e) {
-                return a.post("/api/user/set_frozen", e)
+                return commonHttp.post("/api/user/set_frozen", e)
             },
             exportFileList: function (e) {
-                return a.post("/api/export/file_list", e)
+                return commonHttp.post("/api/export/file_list", e)
             },
             exportDelTask: function (e) {
-                return a.post("/api/export/delete", e)
+                return commonHttp.post("/api/export/delete", e)
             },
             hideNotification: function () {
-                return a.post("/api/export/hide_notification")
+                return commonHttp.post("/api/export/hide_notification")
             },
             logout: function (e) {
-                return a.post("/api/user/logout", e)
+                return commonHttp.post("/api/user/logout", e)
             },
             modifyPassword: function (e) {
-                return a.post("/api/user/modify_pwd", e)
+                return commonHttp.post("/api/user/modify_pwd", e)
             },
             getUserInfo: function () {
-                return a.post("/api/user/info")
+                return commonHttp.post("/api/user/info")
             },
             unreadNewFeatures: function () {
-                return a.post("/api/log/unread")
+                return commonHttp.post("/api/log/unread")
             },
             readNewFeatures: function () {
-                return a.get("/api/log/read")
+                return commonHttp.get("/api/log/read")
             },
             getMobileCode: function (e) {
-                return a.post("/api/user/gen_captcha", e)
+                return commonHttp.post("/api/user/gen_captcha", e)
             }
         },
-        y = {
+        enumField = {
             getOrderInfo: function (e) {
-                return a.get("/api/enum_order/info", {
+                return commonHttp.get("/api/enum_order/info", {
                     _t: (new Date).getTime(),
                     tb_id: e.tb_id,
                     fid: e.fid,
@@ -4559,10 +4584,10 @@ function commonService(e, t, a) {
                 }).then(o)
             },
             updateOrder: function (e) {
-                return a.post("/api/enum_order/update", e)
+                return commonHttp.post("/api/enum_order/update", e)
             },
             getFilteredOrderInfo: function (e) {
-                return a.get("/api/enum_order/filter_info", {
+                return commonHttp.get("/api/enum_order/filter_info", {
                     _t: (new Date).getTime(),
                     tb_id: e.tb_id,
                     fid: e.fid,
@@ -4573,16 +4598,16 @@ function commonService(e, t, a) {
                 }).then(o)
             }
         },
-        w = {
+        sql_script = {
             preview: function (e) {
-                return a.post("/api/sql_script/preview", {
+                return commonHttp.post("/api/sql_script/preview", {
                     info: angular.toJson(e)
                 }, {
                     errHint: !1
                 })
             },
             create: function (e, t, i, n) {
-                return a.post("/api/sql_script/create", {
+                return commonHttp.post("/api/sql_script/create", {
                     folder_id: i,
                     info: angular.toJson({
                         table_name: e,
@@ -4594,7 +4619,7 @@ function commonService(e, t, a) {
                 })
             },
             modifyPreview: function (e, t, i, n, r) {
-                return a.post("/api/sql_script/modify_preview", {
+                return commonHttp.post("/api/sql_script/modify_preview", {
                     tb_id: i,
                     tb_name: e,
                     info: t,
@@ -4605,7 +4630,7 @@ function commonService(e, t, a) {
                 })
             },
             modify: function (e, t, i, n, r) {
-                return a.post("/api/sql_script/modify", {
+                return commonHttp.post("/api/sql_script/modify", {
                     tb_id: i,
                     info: angular.toJson({
                         table_name: e,
@@ -4617,211 +4642,211 @@ function commonService(e, t, a) {
                 })
             },
             checkIncrease: function (e) {
-                return a.post("/api/sql_script/check_tb_increment", e)
+                return commonHttp.post("/api/sql_script/check_tb_increment", e)
             }
         },
-        C = {
+        tpl = {
             ruleTbInfo: function (e) {
-                return a.post("/api/tb/rule_tb_info", e)
+                return commonHttp.post("/api/tb/rule_tb_info", e)
             },
             getFieldRule: function (e) {
-                return a.post("/api/rule/search_filter", e)
+                return commonHttp.post("/api/rule/search_filter", e)
             },
             saveBatchRule: function (e) {
-                return a.post("/api/rule/create_filter_batch", e)
+                return commonHttp.post("/api/rule/create_filter_batch", e)
             },
             chartList: function (e) {
-                return a.post("/api/chart/list", e)
+                return commonHttp.post("/api/chart/list", e)
             },
             tplCommit: function (e) {
-                return a.post("/api/template/commit", e)
+                return commonHttp.post("/api/template/commit", e)
             }
         },
-        x = {
+        workspace = {
             tbListPreview: function (e) {
-                return a.post("/api/workspace/tb_list_preview", e)
+                return commonHttp.post("/api/workspace/tb_list_preview", e)
             },
             create: function (e) {
-                return a.post("/api/workspace/create", e)
+                return commonHttp.post("/api/workspace/create", e)
             },
             delete: function (e) {
-                return a.post("/api/workspace/delete", e)
+                return commonHttp.post("/api/workspace/delete", e)
             },
             modify: function (e) {
-                return a.post("/api/workspace/modify", e)
+                return commonHttp.post("/api/workspace/modify", e)
             },
             info: function (e) {
-                return a.post("/api/workspace/info", e)
+                return commonHttp.post("/api/workspace/info", e)
             },
             list: function () {
-                return a.post("/api/workspace/list")
+                return commonHttp.post("/api/workspace/list")
             },
             modifyDashList: function (e) {
-                return a.post("/api/workspace/modify_dash_list", e)
+                return commonHttp.post("/api/workspace/modify_dash_list", e)
             },
             modifyTableList: function (e) {
-                return a.post("/api/workspace/modify_tb_list", e)
+                return commonHttp.post("/api/workspace/modify_tb_list", e)
             },
             modifyGroupList: function (e) {
-                return a.post("/api/workspace/modify_group_list", e)
+                return commonHttp.post("/api/workspace/modify_group_list", e)
             },
             modifyAuthority: function (e) {
-                return a.post("/api/workspace/modify_authority_info", e)
+                return commonHttp.post("/api/workspace/modify_authority_info", e)
             },
             userList: function (e) {
-                return a.post("/api/workspace/user_list", e)
+                return commonHttp.post("/api/workspace/user_list", e)
             },
             workspaceLog: function (e) {
-                return a.post("/api/workspace/ws_log", e)
+                return commonHttp.post("/api/workspace/ws_log", e)
             }
         },
-        k = {
+        sem = {
             list: function (e) {
-                return a.post("/api/sem/list", {
+                return commonHttp.post("/api/sem/list", {
                     ds_id: e.ds_id,
                     ds_type: e.ds_type
                 })
             },
             merge: function (e) {
-                return a.post("/api/sem/merge", {
+                return commonHttp.post("/api/sem/merge", {
                     link_list: e.link_list
                 })
             },
             tbrefer: function (e) {
-                return a.post("/api/sem/tbrefer", {
+                return commonHttp.post("/api/sem/tbrefer", {
                     ds_id: e.ds_id,
                     tmp_ds_id: e.tmp_ds_id
                 })
             }
         },
-        D = {
+        guide = {
             guideSet: function (e) {
-                return a.post("/api/user/guide_set", e)
+                return commonHttp.post("/api/user/guide_set", e)
             },
             getDashDemo: function () {
-                return a.post("/api/personal/demo")
+                return commonHttp.post("/api/personal/demo")
             }
         },
-        S = {
+        notice = {
             getListByType: function (e) {
-                return a.post("/api/message/list", e)
+                return commonHttp.post("/api/message/list", e)
             },
             setNoticeReaded: function (e) {
-                return a.post("/api/message/read", e)
+                return commonHttp.post("/api/message/read", e)
             },
             getNoticeType: function () {
-                return a.post("/api/message/purpose")
+                return commonHttp.post("/api/message/purpose")
             }
         },
-        T = {
+        authority = {
             info: function (e) {
-                return a.post("/api/auth/info", e)
+                return commonHttp.post("/api/auth/info", e)
             },
             create: function (e) {
-                return a.post("/api/auth/create", e)
+                return commonHttp.post("/api/auth/create", e)
             },
             modify: function (e) {
-                return a.post("/api/auth/modify", e)
+                return commonHttp.post("/api/auth/modify", e)
             },
             stop: function (e) {
-                return a.post("/api/auth/stop", e)
+                return commonHttp.post("/api/auth/stop", e)
             },
             oplog: function (e) {
-                return a.post("/api/auth/oplog", e)
+                return commonHttp.post("/api/auth/oplog", e)
             }
         },
-        I = {
+        account = {
             userInfo: function (e) {
-                return a.post("/api/sub/info", e)
+                return commonHttp.post("/api/sub/info", e)
             },
             userList: function (e) {
-                return a.post("/api/sub/list", e)
+                return commonHttp.post("/api/sub/list", e)
             },
             userCreate: function (e) {
-                return a.post("/api/sub/create", e)
+                return commonHttp.post("/api/sub/create", e)
             },
             userModify: function (e) {
-                return a.post("/api/sub/modify", e)
+                return commonHttp.post("/api/sub/modify", e)
             },
             userDelete: function (e) {
-                return a.post("/api/sub/delete", e)
+                return commonHttp.post("/api/sub/delete", e)
             },
             userDelTbCheck: function (e) {
-                return a.post("/api/sub/del_tb_check", e)
+                return commonHttp.post("/api/sub/del_tb_check", e)
             },
             setFrozen: function (e) {
-                return a.post("/api/user/set_frozen", e)
+                return commonHttp.post("/api/user/set_frozen", e)
             },
             resetPwd: function (e) {
-                return a.get("/api/user/reset_pwd", e)
+                return commonHttp.get("/api/user/reset_pwd", e)
             },
             sentNotice: function (e) {
-                return a.post("/api/sub/send_notice", e)
+                return commonHttp.post("/api/sub/send_notice", e)
             },
             accountLimit: function (e) {
-                return a.get("/api/account/limit", e)
+                return commonHttp.get("/api/account/limit", e)
             },
             groupList: function (e) {
-                return a.get("/api/group/list", e)
+                return commonHttp.get("/api/group/list", e)
             },
             groupOrder: function (e) {
-                return a.post("/api/group/order", e)
+                return commonHttp.post("/api/group/order", e)
             },
             groupInfo: function (e) {
-                return a.post("/api/group/info", e)
+                return commonHttp.post("/api/group/info", e)
             },
             groupCreate: function (e) {
-                return a.post("/api/group/create", e)
+                return commonHttp.post("/api/group/create", e)
             },
             removeAdminCheck: function (e) {
-                return a.post("/api/group/check_remove_admin", e)
+                return commonHttp.post("/api/group/check_remove_admin", e)
             },
             groupModify: function (e) {
-                return a.post("/api/group/modify", e)
+                return commonHttp.post("/api/group/modify", e)
             },
             groupDelete: function (e) {
-                return a.post("/api/group/delete", e)
+                return commonHttp.post("/api/group/delete", e)
             },
             groupDelTbCheck: function (e) {
-                return a.post("/api/group/del_tb_check", e)
+                return commonHttp.post("/api/group/del_tb_check", e)
             },
             securityInfo: function (e) {
-                return a.post("/api/security/info", e)
+                return commonHttp.post("/api/security/info", e)
             },
             securityCreate: function (e) {
-                return a.post("/api/security/create", e)
+                return commonHttp.post("/api/security/create", e)
             },
             securityDelete: function (e) {
-                return a.post("/api/security/delete", e)
+                return commonHttp.post("/api/security/delete", e)
             },
             securityList: function (e) {
-                return a.get("/api/security/list", e)
+                return commonHttp.get("/api/security/list", e)
             },
             securityPreCheck: function (e) {
-                return a.post("/api/security/pre_check", e)
+                return commonHttp.post("/api/security/pre_check", e)
             },
             securityModify: function (e) {
-                return a.post("/api/security/modify", e)
+                return commonHttp.post("/api/security/modify", e)
             },
             tbShareFieldCheck: function (e) {
-                return a.post("/api/share/cancel_fields_check", e)
+                return commonHttp.post("/api/share/cancel_fields_check", e)
             },
             tbShareFilterCheck: function (e) {
-                return a.post("/api/share/check", e)
+                return commonHttp.post("/api/share/check", e)
             },
             getGroupCustomFields: function (e) {
-                return a.post("/api/group/list_fields", e)
+                return commonHttp.post("/api/group/list_fields", e)
             },
             updateGroupCustomFields: function (e) {
-                return a.post("/api/group/update_fields", e)
+                return commonHttp.post("/api/group/update_fields", e)
             },
             groupMutiOpt: function (e) {
-                return a.post("/api/group/muti_opt", e)
+                return commonHttp.post("/api/group/muti_opt", e)
             }
         },
-        L = {
+        chart_tpl = {
             info: function (e) {
-                return a.post("/api/chart_tpl/info", {
+                return commonHttp.post("/api/chart_tpl/info", {
                     tpl_id: e
                 })
             },
@@ -4834,7 +4859,7 @@ function commonService(e, t, a) {
                     dsh_meta: angular.toJson(e.dsh_meta),
                     category: e.category
                 };
-                return a.post("/api/chart_tpl_apply/create", t)
+                return commonHttp.post("/api/chart_tpl_apply/create", t)
             },
             create: function (e) {
                 var t = {
@@ -4844,10 +4869,10 @@ function commonService(e, t, a) {
                     type: e.type,
                     explain: e.explain
                 };
-                return angular.isArray(e.fid_explain) ? t.fid_explain = angular.toJson(e.fid_explain) : t.fid_explain = e.fid_explain, a.post("/api/chart_tpl/create", t)
+                return angular.isArray(e.fid_explain) ? t.fid_explain = angular.toJson(e.fid_explain) : t.fid_explain = e.fid_explain, commonHttp.post("/api/chart_tpl/create", t)
             },
             delete: function (e) {
-                return a.post("/api/chart_tpl/delete", {
+                return commonHttp.post("/api/chart_tpl/delete", {
                     tpl_id: e
                 })
             },
@@ -4860,47 +4885,47 @@ function commonService(e, t, a) {
                     type: e.type,
                     explain: e.explain
                 };
-                return angular.isArray(e.fid_explain) ? t.fid_explain = angular.toJson(e.fid_explain) : t.fid_explain = e.fid_explain, a.post("/api/chart_tpl/modify", t)
+                return angular.isArray(e.fid_explain) ? t.fid_explain = angular.toJson(e.fid_explain) : t.fid_explain = e.fid_explain, commonHttp.post("/api/chart_tpl/modify", t)
             },
             applyList: function (e) {
                 var t = {
                     type: e.type
                 };
-                return a.post("/api/chart_tpl_apply/list", t)
+                return commonHttp.post("/api/chart_tpl_apply/list", t)
             },
             typeList: function (e) {
-                return a.post("/api/chart_tpl/type_list", e)
+                return commonHttp.post("/api/chart_tpl/type_list", e)
             }
         },
-        A = {
+        chart_tpl_project = {
             getTree: function (e) {
-                return a.post("/api/chart_tpl_proj/tree", e)
+                return commonHttp.post("/api/chart_tpl_proj/tree", e)
             },
             create: function (e) {
-                return a.post("/api/chart_tpl_proj/create", {
+                return commonHttp.post("/api/chart_tpl_proj/create", {
                     name: e
                 })
             },
             modify: function (e, t) {
-                return a.post("/api/chart_tpl_proj/modify", {
+                return commonHttp.post("/api/chart_tpl_proj/modify", {
                     proj_id: e,
                     name: t
                 })
             },
             del: function (e) {
-                return a.post("/api/chart_tpl_proj/delete", {
+                return commonHttp.post("/api/chart_tpl_proj/delete", {
                     proj_id: e
                 })
             },
             order: function (e, t, i) {
-                return a.post("/api/chart_template/order", {
+                return commonHttp.post("/api/chart_template/order", {
                     proj_id: e,
                     type: t || 0,
                     sort: angular.toJson(i)
                 })
             },
             move: function (e, t, i, n) {
-                return a.post("/api/chart_template/move", {
+                return commonHttp.post("/api/chart_template/move", {
                     dsh_id: n,
                     proj_id: e,
                     type: t,
@@ -4908,120 +4933,120 @@ function commonService(e, t, a) {
                 })
             }
         },
-        E = {
+        chartTplRule = {
             info: function (e) {
-                return a.get("/api/chart_tpl_rule/info", {
+                return commonHttp.get("/api/chart_tpl_rule/info", {
                     rule_id: e
                 })
             },
             industryList: function (e) {
-                return a.get("/api/industry/list", e)
+                return commonHttp.get("/api/industry/list", e)
             },
             domainList: function (e) {
-                return a.get("/api/domain/list", e)
+                return commonHttp.get("/api/domain/list", e)
             },
             domainSearch: function (e) {
-                return a.get("/api/domain/search", e)
+                return commonHttp.get("/api/domain/search", e)
             },
             create: function (e) {
-                return a.post("/api/chart_tpl_rule/create", e)
+                return commonHttp.post("/api/chart_tpl_rule/create", e)
             },
             list: function (e) {
-                return a.post("/api/chart_tpl_rule/list", e)
+                return commonHttp.post("/api/chart_tpl_rule/list", e)
             },
             delete: function (e) {
-                return a.post("/api/chart_tpl_rule/delete", {
+                return commonHttp.post("/api/chart_tpl_rule/delete", {
                     rule_id: e
                 })
             },
             modify: function (e) {
-                return a.post("/api/chart_tpl_rule/modify", e)
+                return commonHttp.post("/api/chart_tpl_rule/modify", e)
             },
             issued: function (e) {
                 var t = {
                     rule_id: e.rule_id,
                     issued_status: e.issued_status
                 };
-                return a.post("/api/chart_tpl_rule/issued", t)
+                return commonHttp.post("/api/chart_tpl_rule/issued", t)
             }
         },
-        F = {
+        pay = {
             personalVipInfo: function () {
-                return a.post("/api/pay/personal_vip_info")
+                return commonHttp.post("/api/pay/personal_vip_info")
             },
             personalOrderHistory: function () {
-                return a.get("/api/pay/order_history")
+                return commonHttp.get("/api/pay/order_history")
             },
             getMemberRightData: function () {
-                return a.get("/pmresources/personal-config/member.json")
+                return commonHttp.get("/pmresources/personal-config/member.json")
             },
             personalInvoice: function (e) {
-                return a.post("/api/receipt/create", e)
+                return commonHttp.post("/api/receipt/create", e)
             },
             personalInvoiceHistory: function () {
-                return a.get("/api/receipt/list")
+                return commonHttp.get("/api/receipt/list")
             }
         },
-        M = {
+        view = {
             preview: function (e) {
-                return a.post("/api/view/preview", e)
+                return commonHttp.post("/api/view/preview", e)
             },
             create: function (e) {
-                return a.post("/api/view/create", e)
+                return commonHttp.post("/api/view/create", e)
             },
             modify: function (e) {
-                return a.post("/api/view/modify", e)
+                return commonHttp.post("/api/view/modify", e)
             },
             info: function (e) {
-                return a.post("/api/view/info", e)
+                return commonHttp.post("/api/view/info", e)
             }
         };
     return {
-        global_config: i,
-        project: n,
-        dashboard: r,
+        global_config: global_config,
+        project: project,
+        dashboard: dashboard,
         chart: chart,
-        db: s,
-        tb: l,
-        field: d,
-        fieldComment: _,
-        ds: p,
-        ds_field: u,
-        share: c,
-        adv_date: h,
-        warn: f,
-        model: g,
-        folder: m,
-        enumField: y,
-        tpl: C,
-        sql_script: w,
-        dash_global_filter: v,
-        workspace: x,
-        user: b,
-        sem: k,
-        guide: D,
-        authority: T,
-        account: I,
-        chart_tpl: L,
-        chart_tpl_project: A,
-        chartTplRule: E,
-        pay: F,
-        notice: S,
-        view: M,
+        db: db,
+        tb: tb,
+        field: field,
+        fieldComment: fieldComment,
+        ds: ds,
+        ds_field: ds_field,
+        share: share,
+        adv_date: adv_date,
+        warn: warn,
+        model: model,
+        folder: folder,
+        enumField: enumField,
+        tpl: tpl,
+        sql_script: sql_script,
+        dash_global_filter: dash_global_filter,
+        workspace: workspace,
+        user: user,
+        sem: sem,
+        guide: guide,
+        authority: authority,
+        account: account,
+        chart_tpl: chart_tpl,
+        chart_tpl_project: chart_tpl_project,
+        chartTplRule: chartTplRule,
+        pay: pay,
+        notice: notice,
+        view: view,
         getJobStatus: function (e) {
-            return a.post("/api/job/status", {
+            return commonHttp.post("/api/job/status", {
                 job_id: e
             })
         },
         getTaskStatus: function (e) {
-            return a.get("/api/task/status", {
+            return commonHttp.get("/api/task/status", {
                 task_id: e
             }, {
                 errHint: !1
             })
         },
         getFunctionList: function () {
-            return a.get("/api/function/list")
+            return commonHttp.get("/api/function/list")
         }
     }
 }
@@ -5030,22 +5055,22 @@ function commonService(e, t, a) {
 function baService(e, t, a) {
     return {
         list: function (e) {
-            return a.post("/api/sta/list", e)
+            return commonHttp.post("/api/sta/list", e)
         },
         addDomain: function (e) {
-            return a.post("/api/sta/add", e)
+            return commonHttp.post("/api/sta/add", e)
         },
         delDomain: function (e) {
-            return a.post("/api/sta/del", e)
+            return commonHttp.post("/api/sta/del", e)
         },
         updateConfig: function (e) {
-            return a.post("/api/sta/update", e)
+            return commonHttp.post("/api/sta/update", e)
         },
         checkDeploy: function (e) {
-            return a.post("/api/sta/ref", e)
+            return commonHttp.post("/api/sta/ref", e)
         },
         getToken: function (e) {
-            return a.post("/api/sta/token", e)
+            return commonHttp.post("/api/sta/token", e)
         }
     }
 }
