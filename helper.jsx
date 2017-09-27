@@ -1607,7 +1607,7 @@ function capacityHint(ngDialog, $rootScope) {
 
 //出错提示
 //"$rootScope", "$timeout", "$location", "$translate"
-function errHint($rootScope, t, a, $translate) {
+function errHint($rootScope, $timeout, a, $translate) {
     var n = 0,
         r = null,
         o = !1;
@@ -2282,9 +2282,11 @@ function errHint($rootScope, t, a, $translate) {
                     l = s && s.warn_msg ? s.warn_msg : "en" == c ? "Something Wrong~" : "出错啦", p = !0
             }
         }
-        return s.dialog ? e.global.dialog_hint = l : 1 == Number(l) && 20 == Number(l) && 1014 == Number(l) || (e.global.hint = l), s.always_show || (r && (t.cancel(r.$$timeoutId), r = null), r = t(function () {
-            e.global.dialog_hint = "", e.global.hint = ""
-        }, s.delay_time || 5e3)), p
+        return s.dialog ? $rootScope.global.dialog_hint = l : 1 == Number(l) && 20 == Number(l) && 1014 == Number(l) || ($rootScope.global.hint = l), s.always_show || (r && (t.cancel(r.$$timeoutId), r = null),
+            r = $timeout(function () {
+                    $rootScope.global.dialog_hint = "", $rootScope.global.hint = ""
+                }, s.delay_time || 5e3)),
+            p
     }
 }
 
@@ -2530,49 +2532,58 @@ function getFunctionList(e, commonService) {
 }
 
 //"$http", "$rootScope", "errHint", "pendingRequests", "$q"
-function commonHttp(e, t, a, i, n) {
-    function r(e, a) {
-        return o = {}, o._t = (new Date).getTime(), t.wsId && (o.ws_id = t.wsId), angular.extend(o, e), s.errHint = !0, a ? angular.extend(s, a) : a = {}, o
+function commonHttp($http, $rootScope, errHint, pendingRequests, $q) {
+    function getParameters(e, a) {
+        return parameters = {},
+            parameters._t = (new Date).getTime(),
+        $rootScope.wsId && (parameters.ws_id = $rootScope.wsId),
+            angular.extend(parameters, e),
+            s.errHint = !0,
+            a ? angular.extend(s, a) : a = {},
+            parameters
     }
-    var o = {},
+    var parameters = {},
         s = {
             errHint: !0
         },
-        l = function (e) {
-            if (e = e.data, "0" == e.status) return e;
+        handleRes = function (res) {
+            if (res = res.data, "0" == res.status)
+                return res;
             if (s.errHint) {
-                var t = parseInt(e.status),
-                    i = null;
-                e.errstr && (i = {
-                    warn_msg: e.errstr,
-                    result: e.result
-                }), a(t || e.errstr, i)
+                var status = parseInt(res.status),
+                    resString = null;
+                res.errstr && (resString = {
+                    warn_msg: res.errstr,
+                    result: res.result
+                });
+                errHint(status || res.errstr, resString)
             }
-            return e
+            return res
         },
         d = ["/api/warn/amount"];
     return {
-        get: function (t, a, s) {
-            var c = n.defer();
-            o = r(a, s), $.inArray(t, d) < 0 && i.add({
-                url: t,
+        get: function (url, a, s) {
+            var c = $q.defer();
+            parameters = getParameters(a, s),
+            $.inArray(url, d) < 0 && pendingRequests.add({
+                url: url,
                 canceller: c
             });
-            var p = e.get(t, {
-                params: o,
+            var p = $http.get(url, {
+                params: parameters,
                 timeout: c.promise
-            }).then(l);
+            }).then(handleRes);
             return p.finally(function () {
-                i.remove(t)
+                i.remove(url)
             }), p.success = function (e) {
                 p.then(e)
             }, p.error = function (e) {
                 p.then(null, e)
             }, p
         },
-        post: function (t, a, i) {
-            o = r(a, i);
-            var s = n.when(e.post(t, o), l);
+        post: function (url, a, i) {
+            parameters = getParameters(a, i);
+            var s = $q.when($http.post(url, parameters), handleRes);
             return s.success = function (e) {
                 s.then(e)
             }, s.error = function (e) {
@@ -3350,13 +3361,16 @@ function formulaService(e, t, a, i, n) {
 
 //"$http", "errHint", "commonHttp"
 function commonService(e, errHint, commonHttp) {
-    var global_config, project, dashboard, o = function (e) {
-        if (e = e.data || e, "0" == e.status) return e.result;
-        var a = null;
-        return e.errstr && (a = {
-            warn_msg: e.errstr
-        }), errHint(Number(e.status), a), null
-    };
+    var global_config,
+        project,
+        dashboard,
+        o = function (e) {
+            if (e = e.data || e, "0" == e.status) return e.result;
+            var a = null;
+            return e.errstr && (a = {
+                warn_msg: e.errstr
+            }), errHint(Number(e.status), a), null
+        };
     global_config = {
         modify: function (e) {
             return commonHttp.post("/api/global_config/modify", {
