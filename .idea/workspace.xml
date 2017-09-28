@@ -23,16 +23,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="route.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/route.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-945">
-              <caret line="20" column="68" selection-start-line="20" selection-start-column="68" selection-end-line="20" selection-end-column="68" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="createProject.jsx" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/static/partials/dialogTemplates/createProject.jsx">
           <provider selected="true" editor-type-id="text-editor">
@@ -43,11 +33,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="helper.jsx" pinned="false" current-in-tab="true">
+      <file leaf-file-name="helper.jsx" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/helper.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="86">
-              <caret line="2571" column="29" selection-start-line="2571" selection-start-column="29" selection-end-line="2571" selection-end-column="29" />
+            <state relative-caret-position="432">
+              <caret line="5064" column="5" selection-start-line="5049" selection-start-column="8" selection-end-line="5063" selection-end-column="9" />
               <folding>
                 <element signature="e#40#1130#0" expanded="false" />
                 <element signature="e#1853#20098#0" expanded="false" />
@@ -77,38 +67,58 @@
                 <element signature="n#!!block;n#chartJumpFuns#0" expanded="false" />
                 <element signature="n#!!block;n#projectTreeCache#0" expanded="false" />
                 <element signature="n#!!block;n#formulaService#0" expanded="false" />
-                <element signature="e#119271#120390#0" expanded="false" />
-                <element signature="e#120412#122010#0" expanded="false" />
-                <element signature="e#122028#126069#0" expanded="false" />
-                <element signature="e#126084#129897#0" expanded="false" />
-                <element signature="e#129912#136795#0" expanded="false" />
-                <element signature="e#136813#139324#0" expanded="false" />
-                <element signature="e#139342#139965#0" expanded="false" />
-                <element signature="e#139980#154715#0" expanded="false" />
-                <element signature="e#154736#155120#0" expanded="false" />
-                <element signature="e#155141#156521#0" expanded="false" />
-                <element signature="e#156538#157626#0" expanded="false" />
-                <element signature="e#157644#158460#0" expanded="false" />
-                <element signature="e#158479#161122#0" expanded="false" />
-                <element signature="e#161147#161723#0" expanded="false" />
-                <element signature="e#161754#162875#0" expanded="false" />
-                <element signature="e#162892#164686#0" expanded="false" />
-                <element signature="e#164708#165594#0" expanded="false" />
-                <element signature="e#165617#167418#0" expanded="false" />
-                <element signature="e#167434#168054#0" expanded="false" />
-                <element signature="e#168076#169584#0" expanded="false" />
-                <element signature="e#169600#170190#0" expanded="false" />
-                <element signature="e#170208#170450#0" expanded="false" />
-                <element signature="e#170469#170840#0" expanded="false" />
-                <element signature="e#170862#171422#0" expanded="false" />
-                <element signature="e#171442#174969#0" expanded="false" />
-                <element signature="e#174991#177069#0" expanded="false" />
-                <element signature="e#177099#178304#0" expanded="false" />
-                <element signature="e#178329#179649#0" expanded="false" />
-                <element signature="e#179665#180320#0" expanded="false" />
-                <element signature="e#180337#180793#0" expanded="false" />
+                <element signature="e#118919#119285#0" expanded="false" />
+                <element signature="e#120454#122060#0" expanded="false" />
+                <element signature="e#122078#126168#0" expanded="false" />
+                <element signature="e#126183#130036#0" expanded="false" />
+                <element signature="e#130051#136966#0" expanded="false" />
+                <element signature="e#136984#139527#0" expanded="false" />
+                <element signature="e#139545#140168#0" expanded="false" />
+                <element signature="e#140183#154942#0" expanded="false" />
+                <element signature="e#154963#155347#0" expanded="false" />
+                <element signature="e#155368#156748#0" expanded="false" />
+                <element signature="e#156765#157853#0" expanded="false" />
+                <element signature="e#157871#158687#0" expanded="false" />
+                <element signature="e#158706#161357#0" expanded="false" />
+                <element signature="e#161382#161958#0" expanded="false" />
+                <element signature="e#161989#163110#0" expanded="false" />
+                <element signature="e#163127#164921#0" expanded="false" />
+                <element signature="e#164943#165845#0" expanded="false" />
+                <element signature="e#165868#167669#0" expanded="false" />
+                <element signature="e#167685#168305#0" expanded="false" />
+                <element signature="e#168327#169835#0" expanded="false" />
+                <element signature="e#169851#170441#0" expanded="false" />
+                <element signature="e#170459#170701#0" expanded="false" />
+                <element signature="e#170720#171091#0" expanded="false" />
+                <element signature="e#171113#171673#0" expanded="false" />
+                <element signature="e#171693#175220#0" expanded="false" />
+                <element signature="e#175242#177320#0" expanded="false" />
+                <element signature="e#177350#178555#0" expanded="false" />
+                <element signature="e#178580#179900#0" expanded="false" />
+                <element signature="e#179916#180571#0" expanded="false" />
+                <element signature="e#180588#181044#0" expanded="false" />
                 <element signature="n#!!block;n#baService#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="api.jsx" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/api.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="469">
+              <caret line="473" column="6" selection-start-line="473" selection-start-column="6" selection-end-line="473" selection-end-column="6" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="restfulApi.jsx" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/restfulApi.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="180">
+              <caret line="12" column="50" selection-start-line="12" selection-start-column="50" selection-end-line="12" selection-end-column="50" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -236,7 +246,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/海致BDP-大数据时代的商业智能_files/spectrum_ac8b803.js" />
         <option value="$PROJECT_DIR$/海致BDP-大数据时代的商业智能_files/spreadjs.min_4b931ef.js" />
         <option value="$PROJECT_DIR$/海致BDP-大数据时代的商业智能_files/bdpa-sdk-js.js" />
         <option value="$PROJECT_DIR$/海致BDP-大数据时代的商业智能.htm" />
@@ -286,6 +295,8 @@
         <option value="$PROJECT_DIR$/tempEdit.js" />
         <option value="$PROJECT_DIR$/src/capacityHint.jsx" />
         <option value="$PROJECT_DIR$/helper.jsx" />
+        <option value="$PROJECT_DIR$/api.jsx" />
+        <option value="$PROJECT_DIR$/restfulApi.jsx" />
       </list>
     </option>
   </component>
@@ -356,28 +367,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="partials" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="dialogTemplates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bdp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bdp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -399,6 +388,9 @@
     <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/static/partials/dialogTemplates" />
       <recent name="$PROJECT_DIR$/static" />
@@ -467,12 +459,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1504776378447</updated>
-      <workItem from="1504776383059" duration="108364000" />
+      <workItem from="1504776383059" duration="116253000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="108364000" />
+    <option name="totallyTimeSpent" value="116253000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="10" y="23" width="1229" height="730" extended-state="0" />
@@ -1189,8 +1181,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/helper.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="86">
-          <caret line="2571" column="29" selection-start-line="2571" selection-start-column="29" selection-end-line="2571" selection-end-column="29" />
+        <state relative-caret-position="432">
+          <caret line="5064" column="5" selection-start-line="5049" selection-start-column="8" selection-end-line="5063" selection-end-column="9" />
           <folding>
             <element signature="e#40#1130#0" expanded="false" />
             <element signature="e#1853#20098#0" expanded="false" />
@@ -1220,38 +1212,54 @@
             <element signature="n#!!block;n#chartJumpFuns#0" expanded="false" />
             <element signature="n#!!block;n#projectTreeCache#0" expanded="false" />
             <element signature="n#!!block;n#formulaService#0" expanded="false" />
-            <element signature="e#119271#120390#0" expanded="false" />
-            <element signature="e#120412#122010#0" expanded="false" />
-            <element signature="e#122028#126069#0" expanded="false" />
-            <element signature="e#126084#129897#0" expanded="false" />
-            <element signature="e#129912#136795#0" expanded="false" />
-            <element signature="e#136813#139324#0" expanded="false" />
-            <element signature="e#139342#139965#0" expanded="false" />
-            <element signature="e#139980#154715#0" expanded="false" />
-            <element signature="e#154736#155120#0" expanded="false" />
-            <element signature="e#155141#156521#0" expanded="false" />
-            <element signature="e#156538#157626#0" expanded="false" />
-            <element signature="e#157644#158460#0" expanded="false" />
-            <element signature="e#158479#161122#0" expanded="false" />
-            <element signature="e#161147#161723#0" expanded="false" />
-            <element signature="e#161754#162875#0" expanded="false" />
-            <element signature="e#162892#164686#0" expanded="false" />
-            <element signature="e#164708#165594#0" expanded="false" />
-            <element signature="e#165617#167418#0" expanded="false" />
-            <element signature="e#167434#168054#0" expanded="false" />
-            <element signature="e#168076#169584#0" expanded="false" />
-            <element signature="e#169600#170190#0" expanded="false" />
-            <element signature="e#170208#170450#0" expanded="false" />
-            <element signature="e#170469#170840#0" expanded="false" />
-            <element signature="e#170862#171422#0" expanded="false" />
-            <element signature="e#171442#174969#0" expanded="false" />
-            <element signature="e#174991#177069#0" expanded="false" />
-            <element signature="e#177099#178304#0" expanded="false" />
-            <element signature="e#178329#179649#0" expanded="false" />
-            <element signature="e#179665#180320#0" expanded="false" />
-            <element signature="e#180337#180793#0" expanded="false" />
+            <element signature="e#118919#119285#0" expanded="false" />
+            <element signature="e#120454#122060#0" expanded="false" />
+            <element signature="e#122078#126168#0" expanded="false" />
+            <element signature="e#126183#130036#0" expanded="false" />
+            <element signature="e#130051#136966#0" expanded="false" />
+            <element signature="e#136984#139527#0" expanded="false" />
+            <element signature="e#139545#140168#0" expanded="false" />
+            <element signature="e#140183#154942#0" expanded="false" />
+            <element signature="e#154963#155347#0" expanded="false" />
+            <element signature="e#155368#156748#0" expanded="false" />
+            <element signature="e#156765#157853#0" expanded="false" />
+            <element signature="e#157871#158687#0" expanded="false" />
+            <element signature="e#158706#161357#0" expanded="false" />
+            <element signature="e#161382#161958#0" expanded="false" />
+            <element signature="e#161989#163110#0" expanded="false" />
+            <element signature="e#163127#164921#0" expanded="false" />
+            <element signature="e#164943#165845#0" expanded="false" />
+            <element signature="e#165868#167669#0" expanded="false" />
+            <element signature="e#167685#168305#0" expanded="false" />
+            <element signature="e#168327#169835#0" expanded="false" />
+            <element signature="e#169851#170441#0" expanded="false" />
+            <element signature="e#170459#170701#0" expanded="false" />
+            <element signature="e#170720#171091#0" expanded="false" />
+            <element signature="e#171113#171673#0" expanded="false" />
+            <element signature="e#171693#175220#0" expanded="false" />
+            <element signature="e#175242#177320#0" expanded="false" />
+            <element signature="e#177350#178555#0" expanded="false" />
+            <element signature="e#178580#179900#0" expanded="false" />
+            <element signature="e#179916#180571#0" expanded="false" />
+            <element signature="e#180588#181044#0" expanded="false" />
             <element signature="n#!!block;n#baService#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="469">
+          <caret line="473" column="6" selection-start-line="473" selection-start-column="6" selection-end-line="473" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/restfulApi.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="50" selection-start-line="12" selection-start-column="50" selection-end-line="12" selection-end-column="50" />
+          <folding />
         </state>
       </provider>
     </entry>

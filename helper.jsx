@@ -2569,16 +2569,16 @@ function commonHttp($http, $rootScope, errHint, pendingRequests, $q) {
                 url: url,
                 canceller: c
             });
-            var p = $http.get(url, {
+            var req = $http.get(url, {
                 params: parameters,
                 timeout: c.promise
             }).then(handleRes);
-            return p.finally(function () {
+            return req.finally(function () {
                 i.remove(url)
-            }), p.success = function (e) {
-                p.then(e)
-            }, p.error = function (e) {
-                p.then(null, e)
+            }), req.success = function (e) {
+                req.then(e)
+            }, req.error = function (e) {
+                req.then(null, e)
             }, p
         },
         post: function (url, a, i) {
@@ -3361,28 +3361,27 @@ function formulaService(e, t, a, i, n) {
 
 //"$http", "errHint", "commonHttp"
 function commonService(e, errHint, commonHttp) {
-    var global_config,
-        project,
-        dashboard,
-        o = function (e) {
-            if (e = e.data || e, "0" == e.status) return e.result;
+    var handleRes = function (e) {
+            if (e = e.data || e, "0" == e.status)
+                return e.result;
             var a = null;
             return e.errstr && (a = {
                 warn_msg: e.errstr
             }), errHint(Number(e.status), a), null
         };
-    global_config = {
-        modify: function (e) {
-            return commonHttp.post("/api/global_config/modify", {
-                data: e
-            }).then(o)
+
+    var global_config = {
+            modify: function (e) {
+                return commonHttp.post("/api/global_config/modify", {
+                    data: e
+                }).then(handleRes)
+            },
+            themeModify: function (e) {
+                return commonHttp.post("/api/user/modify_theme", {
+                    theme_id: e
+                })
+            }
         },
-        themeModify: function (e) {
-            return commonHttp.post("/api/user/modify_theme", {
-                theme_id: e
-            })
-        }
-    },
         project = {
             create: function (e, t, i) {
                 return commonHttp.post("/api/project/create", {
@@ -3392,7 +3391,7 @@ function commonService(e, errHint, commonHttp) {
                 })
             },
             getTree: function (e) {
-                return commonHttp.get("/api/project/tree", e).then(o)
+                return commonHttp.get("/api/project/tree", e).then(handleRes)
             },
             modify: function (e, t) {
                 return commonHttp.get("/api/project/modify", {
@@ -3419,7 +3418,7 @@ function commonService(e, errHint, commonHttp) {
         },
         dashboard = {
             getList: function (e) {
-                return commonHttp.get("/api/dashboard/list", e).then(o)
+                return commonHttp.get("/api/dashboard/list", e).then(handleRes)
             },
             getInfo: function (e) {
                 var t = {};
@@ -3483,7 +3482,8 @@ function commonService(e, errHint, commonHttp) {
                         custom: 8
                     },
                     n = i[e.type];
-                return t.ct_type = n || 0, e.ct_type && (t.ct_type = e.ct_type), t.name = e.name, "view" == e.type ? (t.parent_id = e.parent_id, t.tb_id = e.tb_id, "number" == typeof e.ct_type && (t.ct_type = e.ct_type)) : "custom" == e.type || "gis" == e.type ? t.tb_ids = angular.toJson(e.tb_id) : t.tb_id = e.tb_id, e.dsh_meta && (t.dsh_meta = angular.toJson(e.dsh_meta)), commonHttp.post("/api/chart/create", t)
+                return t.ct_type = n || 0, e.ct_type && (t.ct_type = e.ct_type), t.name = e.name, "view" == e.type ? (t.parent_id = e.parent_id, t.tb_id = e.tb_id, "number" == typeof e.ct_type && (t.ct_type = e.ct_type)) : "custom" == e.type || "gis" == e.type ? t.tb_ids = angular.toJson(e.tb_id) : t.tb_id = e.tb_id, e.dsh_meta && (t.dsh_meta = angular.toJson(e.dsh_meta)), 
+                commonHttp.post("/api/chart/create", t)
             },
             copy: function (e) {
                 return commonHttp.get("/api/chart/copy", e)
@@ -3508,10 +3508,10 @@ function commonService(e, errHint, commonHttp) {
             getRelationList: function (e) {
                 return commonHttp.get("/api/chart/rela_list", {
                     tb_id: e
-                }).then(o)
+                }).then(handleRes)
             },
             search: function (e) {
-                return commonHttp.post("/api/chart/search", e).then(o)
+                return commonHttp.post("/api/chart/search", e).then(handleRes)
             },
             getSizeGroups: function (e, t, i, n, r) {
                 return r = r ? angular.toJson(r) : void 0, commonHttp.post("/api/chart/size_groups", {
@@ -3520,14 +3520,14 @@ function commonService(e, errHint, commonHttp) {
                     drill_level: i,
                     drill_field: n,
                     drill_value: r
-                }).then(o)
+                }).then(handleRes)
             },
             getGisSizeGroups: function (e, t, i) {
                 return commonHttp.post("/api/chart/size_groups", {
                     ct_id: e,
                     bubble_setting: angular.toJson(t),
                     layer_level: i
-                }).then(o)
+                }).then(handleRes)
             },
             addRelaTb: function (e, t) {
                 return commonHttp.post("/api/chart/add_rela_tb", {
@@ -3558,13 +3558,13 @@ function commonService(e, errHint, commonHttp) {
             cmpDateRange: function (e) {
                 return commonHttp.post("/api/chart/filter_cmp_date_range", e)
             }
-        };
-    var db = {
+        },
+        db = {
             getField: function (e) {
                 var t = {
                     dstb_id: e
                 };
-                return commonHttp.get("/api/dstb/info", t).then(o)
+                return commonHttp.get("/api/dstb/info", t).then(handleRes)
             },
             del: function (e) {
                 var t = {
@@ -3573,24 +3573,24 @@ function commonService(e, errHint, commonHttp) {
                 return commonHttp.get("/api/dstb/delete", t)
             },
             getList: function () {
-                return commonHttp.get("/api/dstb/list").then(o)
+                return commonHttp.get("/api/dstb/list").then(handleRes)
             },
             modify: function (e, t) {
                 var i = {
                     dstb_id: e,
                     data: t
                 };
-                return commonHttp.get("/api/dstb/modify", i).then(o)
+                return commonHttp.get("/api/dstb/modify", i).then(handleRes)
             },
             getUpdateRecord: function (e) {
-                return commonHttp.get("/api/excel/list?time=" + (new Date).getTime(), e).then(o)
+                return commonHttp.get("/api/excel/list?time=" + (new Date).getTime(), e).then(handleRes)
             },
             deleteFile: function (e, t) {
                 var i = {
                     dstb_id: e,
                     filetbname: t
                 };
-                return commonHttp.get("/api/dstb/delete_file", i).then(o)
+                return commonHttp.get("/api/dstb/delete_file", i).then(handleRes)
             },
             excelCreate: function (e) {
                 return commonHttp.post("/api/excel/create", e, {
@@ -3684,7 +3684,7 @@ function commonService(e, errHint, commonHttp) {
                 })
             },
             getList: function () {
-                return commonHttp.get("/api/tb/list").then(o)
+                return commonHttp.get("/api/tb/list").then(handleRes)
             },
             copy: function (e) {
                 return commonHttp.post("/api/data_union/union_copy", e)
@@ -3698,7 +3698,7 @@ function commonService(e, errHint, commonHttp) {
                 return commonHttp.get("/api/tb/multi_info", e)
             },
             preview: function (e) {
-                return commonHttp.post("/api/tb/preview", e).then(o)
+                return commonHttp.post("/api/tb/preview", e).then(handleRes)
             },
             del: function (e) {
                 return commonHttp.post("/api/tb/delete", {
@@ -3715,7 +3715,7 @@ function commonService(e, errHint, commonHttp) {
             getJoinInfo: function (e) {
                 return commonHttp.get("/api/tb/join_info", {
                     tb_id: e
-                }).then(o)
+                }).then(handleRes)
             },
             getJoinErrorReport: function (e) {
                 return commonHttp.post("/api/wb/profile", e)
@@ -3737,7 +3737,7 @@ function commonService(e, errHint, commonHttp) {
                 })
             },
             getStorageAccount: function () {
-                return commonHttp.get("/api/tb/stat").then(o)
+                return commonHttp.get("/api/tb/stat").then(handleRes)
             },
             modifyTag: function (e) {
                 return commonHttp.post("/api/tb/modify_tag", {
@@ -3895,25 +3895,25 @@ function commonService(e, errHint, commonHttp) {
                 return commonHttp.post("/api/field/url_preview", {
                     tb_id: e,
                     field_ids: angular.toJson(t)
-                }).then(o)
+                }).then(handleRes)
             },
             extract_preview: function (e, t) {
                 return commonHttp.post("/api/field/extract_preview", {
                     tb_id: e,
                     fields: angular.toJson(t)
-                }).then(o)
+                }).then(handleRes)
             },
             extract_url: function (e, t) {
                 return commonHttp.post("/api/field/extract_url", {
                     tb_id: e,
                     fields: angular.toJson(t)
-                }).then(o)
+                }).then(handleRes)
             },
             merge: function (e, t) {
                 return commonHttp.post("/api/field/merge", {
                     tb_id: e,
                     info: angular.toJson(t)
-                }).then(o)
+                }).then(handleRes)
             },
             getAggregatorLen: function (e) {
                 return commonHttp.post("/api/field/get_length", e)
@@ -3947,16 +3947,16 @@ function commonService(e, errHint, commonHttp) {
                 return commonHttp.post("/api/ds/create", e)
             },
             getNameAndTag: function () {
-                return commonHttp.get("/api/ds/list").then(o)
+                return commonHttp.get("/api/ds/list").then(handleRes)
             },
             getList: function (e) {
-                return commonHttp.get("/api/ds/list").then(o)
+                return commonHttp.get("/api/ds/list").then(handleRes)
             },
             getListForDataSource: function (e) {
                 return commonHttp.get("/api/ds/nslist", e)
             },
             getTree: function () {
-                return commonHttp.get("/api/ds/tree").then(o)
+                return commonHttp.get("/api/ds/tree").then(handleRes)
             },
             info: function (e) {
                 return commonHttp.get("/api/ds/info", e)
@@ -4423,7 +4423,7 @@ function commonService(e, errHint, commonHttp) {
         },
         folder = {
             getList: function () {
-                return commonHttp.post("/api/folder/list").then(o)
+                return commonHttp.post("/api/folder/list").then(handleRes)
             },
             del: function (e, t) {
                 return commonHttp.get("/api/folder/delete", {
@@ -4595,7 +4595,7 @@ function commonService(e, errHint, commonHttp) {
                     tb_id: e.tb_id,
                     fid: e.fid,
                     ct_id: e.ct_id || ""
-                }).then(o)
+                }).then(handleRes)
             },
             updateOrder: function (e) {
                 return commonHttp.post("/api/enum_order/update", e)
@@ -4609,7 +4609,7 @@ function commonService(e, errHint, commonHttp) {
                     index: e.index || 0,
                     drill_level: e.drill_level || 0,
                     axis: e.axis || ""
-                }).then(o)
+                }).then(handleRes)
             }
         },
         sql_script = {
